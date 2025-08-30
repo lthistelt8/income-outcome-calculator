@@ -1,2 +1,3 @@
-# income-outcome-calculator
-The Income-Outcome Calculator saves user-entered expense data, and uses this data to calculate leftover income within a bi-weekly pay period.
+# Income-Outcome Calculator
+
+The Income-Outcome Calculator allows users to enter (and save) expense data to a larger database, which is then used as a reference for bi-weekly paycheck calculations.
