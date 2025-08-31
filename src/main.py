@@ -5,3 +5,6 @@ class CATEGORY(Enum):
     VARIABLE = auto()
     CREDIT_CARD = auto()
     ONE_TIME_EXPENSE = auto()
+
+    def __str__(self):
+        return self.name.replace("_"," ").title()
