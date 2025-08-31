@@ -8,3 +8,5 @@ class CATEGORY(Enum):
 
     def __str__(self):
         return self.name.replace("_"," ").title()
+
+expenses = {}
