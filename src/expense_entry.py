@@ -1,4 +1,15 @@
-from main import CATEGORY
+'''Take user input to return as parameters to pass through business logic'''
+
+from enum import Enum, auto
+class CATEGORY(Enum):
+    '''A list of enumerated categories for expenses'''
+    AUTOMATIC=  auto()
+    VARIABLE = auto()
+    CREDIT_CARD = auto()
+    ONE_TIME_EXPENSE = auto()
+
+    def __str__(self):
+        return self.name.replace("_"," ").title()
 
 def get_expense_detail():
     '''Collects and returns expense details.
@@ -8,8 +19,8 @@ def get_expense_detail():
         Expense amount (represented by an integer)
     '''
     for i, cat in enumerate(CATEGORY, 1):
-        print(f"{i}. {CATEGORY}")
-    
+        print(f"{i}. {cat}")
+
     print("Enter the category number for this expense.")
     cidx = int(input("> "))
 
@@ -17,8 +28,8 @@ def get_expense_detail():
         cidx = CATEGORY(cidx - 1)
     except ValueError:
         print("Invalid entry. Please enter the corresponding number.")
-        return None
-    
+        return get_expense_detail
+
     print("Enter the expense name.")
     expense_name = str(input("> "))
 
@@ -42,3 +53,5 @@ def get_expense_detail():
     else:
         print("Invalid entry. Please enter 'y' or 'n'.")
         return None
+
+get_expense_detail()

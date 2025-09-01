@@ -2,17 +2,7 @@
 Business logic that the user will execute through an implemented main menu
 '''
 
-from enum import Enum, auto
 from expense_entry import get_expense_detail
-class CATEGORY(Enum):
-    '''A list of enumerated categories for expenses'''
-    AUTOMATIC=  auto()
-    VARIABLE = auto()
-    CREDIT_CARD = auto()
-    ONE_TIME_EXPENSE = auto()
-
-    def __str__(self):
-        return self.name.replace("_"," ").title()
 
 expenses = {}
 
