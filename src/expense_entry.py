@@ -14,21 +14,19 @@ class CATEGORY(Enum):
 def get_expense_detail():
     '''Collects and returns expense details.
     Parameters:
-        Category (represented by category index, or 'cidx'), must be entered as a number to be converted back to an integer
+        Category (represented by an integer category index, or 'cidx')
         Expense name (represented by a string)
-        Expense amount (represented by an integer)
+        Expense amount (represented by a float)
     '''
     for i, cat in enumerate(CATEGORY, 1):
         print(f"{i}. {cat}")
 
     print("Enter the category number for this expense.")
-    cidx = int(input("> "))
 
     try:
-        cidx = CATEGORY(cidx - 1)
+        cidx = int(input("> "))
     except ValueError:
-        print("Invalid entry. Please enter the corresponding number.")
-        return get_expense_detail
+        print("Invalid input. Please enter 1-4 to make your choice.")
 
     print("Enter the expense name.")
     expense_name = str(input("> "))
@@ -46,12 +44,12 @@ def get_expense_detail():
     print("Confirm expense? (y/n)")
     confirm = str(input("> "))
 
-    if confirm == 'y':
-        return cidx, expense_name, expense_amount
-    elif confirm == 'n':
-        return None
-    else:
-        print("Invalid entry. Please enter 'y' or 'n'.")
-        return None
+    if confirm not in ('y', 'n'):
+        print("Invalid input. Please enter 'y' or 'n'.")
+        return confirm
+    if confirm == 'n':
+        return get_expense_detail
+
+    return cidx, expense_name, expense_amount
 
 get_expense_detail()
