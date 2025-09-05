@@ -2,7 +2,7 @@
 Business logic that the user will execute through an implemented main menu
 '''
 
-from expense_entry import get_expense_detail
+from .expense_entry import get_expense_detail
 
 expenses = {}
 
