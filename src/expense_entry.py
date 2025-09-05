@@ -18,15 +18,23 @@ def get_expense_detail():
         Expense name (represented by a string)
         Expense amount (represented by a float)
     '''
-    for i, cat in enumerate(CATEGORY, 1):
+    for i, cat in enumerate(Category, 1):
         print(f"{i}. {cat}")
 
     print("Enter the category number for this expense.")
 
-    try:
-        cidx = int(input("> "))
-    except ValueError:
-        print("Invalid input. Please enter 1-4 to make your choice.")
+    while True:
+        try:
+            cidx = int(input("> "))
+            break
+        except ValueError:
+            print("Invalid. Please select 1-4.")
+
+    if not 1 <= cidx <= len(list(Category)):
+        print("Selection out of range.")
+        return None
+
+    cat = list(Category)[cidx - 1]
 
     print("Enter the expense name.")
     expense_name = str(input("> "))
@@ -50,6 +58,6 @@ def get_expense_detail():
     if confirm == 'n':
         return get_expense_detail
 
-    return cidx, expense_name, expense_amount
+    return cat, expense_name, expense_amount
 
 get_expense_detail()
