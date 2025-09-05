@@ -12,4 +12,3 @@ def test_add_expense():
     assert 'Fixed' in test_expenses['category']
     assert 'Mortgage' in test_expenses['expense name']
     assert 90 in test_expenses['expense amount']
-    
