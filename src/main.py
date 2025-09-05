@@ -45,4 +45,19 @@ def del_expense():
             print(f"Selection out of range. Please enter 1-{len(expenses)}.")
             continue
         break
-    
+
+    marked = expenses[didx - 1]
+    while True:
+        print(f"Are you sure you want to delete {marked} (y/n)?")
+        confirm = str(input("> "))
+        if confirm not in ('y', 'n'):
+            print("Invalid entry. Please enter 'y' or 'n'.")
+            continue
+
+        if confirm == 'n':
+            print("Deletion cancelled.")
+            break
+
+    expenses.pop(marked)
+    print(f"{marked} has been deleted.")
+    return None
