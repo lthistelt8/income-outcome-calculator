@@ -7,12 +7,10 @@ import src.main as m
 def test_add_expense():
     '''Test the add_expense() function'''
 
-    test_expenses = {}
+    m.expenses.clear()
 
-    m.add_expense('Fixed', 'Mortgage', 90)
-    assert 'Fixed' in test_expenses['category']
-    assert 'Mortgage' in test_expenses['expense name']
-    assert 90 in test_expenses['expense amount']
-    print(test_expenses)
-
-print(f"\nWorking Directory: {WORKING_PATH}")
+    with patch('src.main.get_expense_detail', return_value = None):
+        m.add_expense('Fixed', 'Mortgage', 90)
+        assert 'Fixed' in m.expenses['category']
+        assert 'Mortgage' in m.expenses['expense name']
+        assert 90 in m.expenses['expense amount']
