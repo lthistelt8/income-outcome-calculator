@@ -62,6 +62,7 @@ def del_expense():
         try:
             expenses.pop(marked)
             print(f"{marked} has been deleted.")
+            print("Returning to main menu...")
             break
         except Exception as e:
             print(f"Exception occurred! {e}")
