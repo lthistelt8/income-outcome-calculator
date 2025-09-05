@@ -1,10 +1,8 @@
 '''
 Contains test functions for source code + business logic
 '''
-from pathlib import Path as p
-from src import main as m
-
-WORKING_PATH = p(__file__).parents[2]
+from unittest.mock import patch
+import src.main as m
 
 def test_add_expense():
     '''Test the add_expense() function'''
