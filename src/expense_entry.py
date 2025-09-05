@@ -48,7 +48,7 @@ def get_expense_detail():
             continue
         break
 
-    print(f"Expense: {expense_name}, {expense_amount}, in {cidx}.")
+    print(f"Expense: {expense_name}, {expense_amount}, in {cat} expenses.")
     print("Confirm expense? (y/n)")
     confirm = str(input("> "))
 
