@@ -21,43 +21,53 @@ def get_expense_detail():
     for i, cat in enumerate(Category, 1):
         print(f"{i}. {cat}")
 
-    print("Enter the category number for this expense.")
+    print("Enter the category number for this expense (or 0 to cancel at any point).")
 
     while True:
-        try:
-            cidx = int(input("> "))
-            break
-        except ValueError:
-            print(f"Invalid. Please select 1-{len(Category)}.")
+        cidx = int(input("> "))
+        if cidx == 0:
+            print("Cancelled expense.")
+            return None
 
-    if not 1 <= cidx <= len(list(Category)):
-        print("Selection out of range.")
-        return None
+        if not 1 <= cidx <= len(list(Category)):
+            print(f"Selection out of range. Please select 1-{len(Category)}.")
+            continue
+
+        break
 
     cat = list(Category)[cidx - 1]
 
     print("Enter the expense name.")
     expense_name = str(input("> "))
+    if expense_name == "0":
+        print("Cancelled expense.")
+        return None
 
-    print("Enter expense amount.")
     while True:
+        print("Enter expense amount.")
+
         try:
-            expense_amount = float(input("> $"))
+            expense_amount = float(input("> "))
+            if expense_amount == 0:
+                print("Cancelled expense.")
+                return None
         except ValueError:
-            print("Invalid. Use only numbers and decimals.")
+            print("Please enter a numerical value.")
             continue
+
         break
 
     print(f"Expense: {expense_name}, {expense_amount}, in {cat} expenses.")
     print("Confirm expense? (y/n)")
-    confirm = str(input("> "))
+    while True:
+        confirm = str(input("> "))
 
-    if confirm not in ('y', 'n'):
-        print("Invalid input. Please enter 'y' or 'n'.")
-        return confirm
-    if confirm == 'n':
-        return get_expense_detail
+        if confirm not in ('y', 'n'):
+            print("Invalid input. Please enter 'y' or 'n'.")
+            continue
+        if confirm == 'n':
+            return get_expense_detail
 
-    return cat, expense_name, expense_amount
+        return cat, expense_name, expense_amount
 
 get_expense_detail()
