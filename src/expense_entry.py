@@ -28,7 +28,7 @@ def get_expense_detail():
             cidx = int(input("> "))
             break
         except ValueError:
-            print("Invalid. Please select 1-4.")
+            print(f"Invalid. Please select 1-{len(Category)}.")
 
     if not 1 <= cidx <= len(list(Category)):
         print("Selection out of range.")
