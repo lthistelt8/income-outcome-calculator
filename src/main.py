@@ -18,3 +18,14 @@ def add_expense(category, expense_name, expense_amount):
     }
 
     expenses.setdefault(category, []).append(expense)
+
+print(expenses)
+
+def del_expense():
+    '''Delete expenses'''
+    if not expenses:
+        print("No expenses found for deletion.")
+        return None
+
+    for e, expense in enumerate(expenses, 1):
+        print(f"{e}. {expense['expense name']}")

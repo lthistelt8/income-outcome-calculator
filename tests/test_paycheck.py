@@ -18,3 +18,6 @@ def test_add_expense():
 
         assert row ['expense name'] == 'Mortgage'
         assert row ['expense amount'] == 90
+
+def test_del_expense():
+    '''Test the del_expense() function'''
