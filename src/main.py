@@ -41,7 +41,7 @@ def del_expense():
             print("Invalid entry. Enter only the number associated with the expense.")
             continue
 
-        if 1<= didx <= len(expenses):
+        if not 1<= didx <= len(expenses):
             print(f"Selection out of range. Please enter 1-{len(expenses)}.")
             continue
         break
@@ -56,8 +56,9 @@ def del_expense():
 
         if confirm == 'n':
             print("Deletion cancelled.")
+            print("Returning to main menu...")
             break
 
-    expenses.pop(marked)
-    print(f"{marked} has been deleted.")
-    return None
+        expenses.pop(marked)
+        print(f"{marked} has been deleted.")
+        break
