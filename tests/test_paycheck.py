@@ -11,6 +11,10 @@ def test_add_expense():
 
     with patch('src.main.get_expense_detail', return_value = None):
         m.add_expense('Fixed', 'Mortgage', 90)
-        assert 'Fixed' in m.expenses['category']
-        assert 'Mortgage' in m.expenses['expense name']
-        assert 90 in m.expenses['expense amount']
+
+        assert 'Fixed' in m.expenses
+
+        row = m.expenses['Fixed'][0]
+
+        assert row ['expense name'] == 'Mortgage'
+        assert row ['expense amount'] == 90
