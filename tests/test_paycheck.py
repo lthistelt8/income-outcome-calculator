@@ -21,3 +21,4 @@ def test_add_expense():
 
 def test_del_expense():
     '''Test the del_expense() function'''
+    #requires dummy expenses, or to save a test version of expenses
