@@ -69,5 +69,3 @@ def get_expense_detail():
             return get_expense_detail
 
         return cat, expense_name, expense_amount
-
-get_expense_detail()
