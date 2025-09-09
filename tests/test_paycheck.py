@@ -19,7 +19,7 @@ def test_add_expense():
         assert row ['expense name'] == 'Mortgage'
         assert row ['expense amount'] == 90
 
-def test_del_expense():
+def test_del_expense_empty_expenses():
     '''Test the del_expense() function'''
     #requires dummy expenses, or save a test version of expenses
-    m.expenses.
+    m.expenses.clear()
