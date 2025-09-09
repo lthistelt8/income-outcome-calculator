@@ -23,7 +23,7 @@ print(expenses)
 
 def del_expense():
     '''Delete expenses'''
-    if not expenses:
+    if not expenses or not any(expenses.values()) :
         print("No expenses found for deletion.")
         return None
 
