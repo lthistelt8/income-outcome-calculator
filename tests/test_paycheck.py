@@ -5,7 +5,7 @@ import unittest as u
 import unittest.mock as um
 from src.main import expenses, add_expense, del_expense
 
-class TestExpenses(u.TestCase):
+class TestExpense(u.TestCase):
     '''Test business logic for expenses'''
 
     def test_add_expense(self):
