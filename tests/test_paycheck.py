@@ -1,6 +1,6 @@
-'''
+"""
 Contains test functions for source code + business logic
-'''
+"""
 import unittest as u
 import unittest.mock as um
 from src.main import expenses, add_expense, del_expense
@@ -23,6 +23,6 @@ class TestExpense(u.TestCase):
             assert row ['expense amount'] == 90
 
     def test_del_expense_empty_expenses(self):
-        '''Test the del_expense() function'''
+        """Test the del_expense() function"""
         #requires dummy expenses, or save a test version of expenses
         del_expense()
