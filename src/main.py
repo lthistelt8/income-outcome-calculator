@@ -7,9 +7,9 @@ from .expense_entry import get_expense_detail
 expenses = {}
 
 def add_expense(category, expense_name, expense_amount):
-    '''
+    """
     Arguments are pulled from the helper function to create and append an 'expense' dictionary.
-    '''
+    """
     get_expense_detail()
     expense = {
         'category': category,
@@ -22,7 +22,7 @@ def add_expense(category, expense_name, expense_amount):
 print(expenses)
 
 def del_expense():
-    '''Delete expenses'''
+    """Delete expenses"""
     if not expenses or not any(expenses.values()) :
         print("No expenses found for deletion.")
         return None
