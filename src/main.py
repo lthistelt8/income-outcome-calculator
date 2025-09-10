@@ -1,6 +1,7 @@
 '''
 Business logic that the user will execute through an implemented main menu
 '''
+from typing import Any
 
 from .expense_entry import get_expense_detail
 
@@ -33,7 +34,7 @@ def del_expense():
     print("Enter the number corresponding to the expense you'd like to delete, or 0 to cancel.")
     while True:
         try:
-            didx = int(input("> "))
+            didx: int = int(input("> "))
             if didx == 0:
                 print("Deletion cancelled.")
                 break
@@ -44,20 +45,19 @@ def del_expense():
         if not 1<= didx <= len(expenses):
             print(f"Selection out of range. Please enter 1-{len(expenses)}.")
             continue
-        break
 
-    marked = expenses[didx - 1]
-    while True:
-        print(f"Are you sure you want to delete {marked} (y/n)?")
-        confirm = str(input("> "))
-        if confirm not in ('y', 'n'):
-            print("Invalid entry. Please enter 'y' or 'n'.")
-            continue
+        marked = expenses[didx - 1]
+        while True:
+            print(f"Are you sure you want to delete {marked} (y/n)?")
+            confirm = str(input("> "))
+            if confirm not in ('y', 'n'):
+                print("Invalid entry. Please enter 'y' or 'n'.")
+                continue
 
-        if confirm == 'n':
-            print("Deletion cancelled.")
-            print("Returning to main menu...")
-            break
+            if confirm == 'n':
+                print("Deletion cancelled.")
+                print("Returning to main menu...")
+                break
 
         try:
             expenses.pop(marked)
