@@ -1,25 +1,28 @@
 """
 Contains test functions for source code + business logic
 """
-from unittest.mock import patch
-import src.main as m
+import unittest as u
+import unittest.mock as um
+from src.main import expenses, add_expense, del_expense
 
-def test_add_expense():
-    """Test the add_expense() function"""
+class TestExpense(u.TestCase):
+    '''Test business logic for expenses'''
 
-    m.expenses.clear()
+    def test_add_expense(self):
+        '''Test the add_expense() function'''
 
-    with patch('src.main.get_expense_detail', return_value = None):
-        m.add_expense('Fixed', 'Mortgage', 90)
+        expenses.clear()
 
-        assert 'Fixed' in m.expenses
+        with um.patch('src.main.get_expense_detail', return_value = None):
+            add_expense('Fixed', 'Mortgage', 90)
 
-        row = m.expenses['Fixed'][0]
+            assert 'Fixed' in expenses
 
-        assert row ['expense name'] == 'Mortgage'
-        assert row ['expense amount'] == 90
+            row = expenses['Fixed'][0]
+            assert row ['expense name'] == 'Mortgage'
+            assert row ['expense amount'] == 90
 
-def test_del_expense_empty_expenses():
-    """Test the del_expense() function"""
-    #requires dummy expenses, or save a test version of expenses
-    m.expenses.clear()
+    def test_del_expense_empty_expenses(self):
+        """Test the del_expense() function"""
+        #requires dummy expenses, or save a test version of expenses
+        del_expense()
