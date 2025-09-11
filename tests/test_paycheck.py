@@ -1,11 +1,11 @@
-'''
+"""
 Contains test functions for source code + business logic
-'''
+"""
 from unittest.mock import patch
 import src.main as m
 
 def test_add_expense():
-    '''Test the add_expense() function'''
+    """Test the add_expense() function"""
 
     m.expenses.clear()
 
@@ -20,6 +20,6 @@ def test_add_expense():
         assert row ['expense amount'] == 90
 
 def test_del_expense_empty_expenses():
-    '''Test the del_expense() function'''
+    """Test the del_expense() function"""
     #requires dummy expenses, or save a test version of expenses
     m.expenses.clear()
