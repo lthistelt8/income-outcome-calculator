@@ -1,7 +1,6 @@
 """
 Business logic that the user will execute through an implemented main menu
 """
-from typing import Any
 
 from .expense_entry import get_expense_detail
 
