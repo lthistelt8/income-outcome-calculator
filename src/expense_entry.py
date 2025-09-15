@@ -1,8 +1,8 @@
-'''Take user input to return as parameters to pass through business logic'''
+"""Take user input to return as parameters to pass through business logic"""
 
 from enum import StrEnum, auto
 class Category(StrEnum):
-    '''A list of enumerated categories for expenses'''
+    """A list of enumerated categories for expenses"""
     AUTOMATIC =  auto()
     VARIABLE = auto()
     CREDIT_CARD = auto()
@@ -12,12 +12,12 @@ class Category(StrEnum):
         return self.name.replace("_"," ").title()
 
 def get_expense_detail():
-    '''Collects and returns expense details.
+    """Collects and returns expense details.
     Parameters:
         Category (represented by an integer category index, or 'cidx')
         Expense name (represented by a string)
         Expense amount (represented by a float)
-    '''
+    """
     for i, cat in enumerate(Category, 1):
         print(f"{i}. {cat}")
 
