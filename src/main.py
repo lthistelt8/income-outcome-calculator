@@ -6,11 +6,11 @@ from src.expense_entry import get_expense_detail
 
 expenses = {}
 
-def add_expense(category, expense_name, expense_amount):
+def add_expense():
     """
     Parameters are passed from get_expense_detail() as arguments to create an expense dictionary object.
     """
-    get_expense_detail()
+    category, expense_name, expense_amount = get_expense_detail()
     expense = {
         'category': category,
         'expense name': expense_name,
@@ -63,4 +63,3 @@ def edit_expense():
 
 add_expense()
 print(expenses) #debug text
-edit_expense()
