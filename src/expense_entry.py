@@ -104,3 +104,6 @@ def edit_expense():
         if not 1 <= eidx <= len(list(expenses[selected_cidx])):
             print(f"Selection out of range. Please select 1-{len(expenses[selected_cidx])}.")
             continue
+
+        selected_eidx = list(expenses[selected_cidx])[eidx - 1]
+        print(f"Now editing {selected_eidx}.")
