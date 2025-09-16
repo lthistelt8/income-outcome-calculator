@@ -19,6 +19,7 @@ def get_expense_detail():
         Expense name (represented by a string)
         Expense amount (represented by a float)
     """
+
     for i, cat in enumerate(Category, 1):
         print(f"{i}. {cat}")
 
@@ -57,7 +58,7 @@ def get_expense_detail():
             continue
         break
 
-    print(f"Expense: {expense_name}, {expense_amount}, in {cat} expenses.")
+    print(f"Expense: {expense_name}, {expense_amount}, in {cat} expenses.") #expense_amount is properly referenced, need to determine how to override warning
     print("Confirm expense? (y/n)")
     while True:
         confirm = str(input("> "))
