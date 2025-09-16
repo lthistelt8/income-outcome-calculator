@@ -19,8 +19,6 @@ def add_expense(category, expense_name, expense_amount):
 
     expenses.setdefault(category, []).append(expense)
 
-print(expenses)
-
 def del_expense():
     """Delete expenses - not yet implemented"""
     print("Feature not yet implemented: delete expense.")
@@ -64,4 +62,5 @@ def edit_expense():
         print(f"Now editing {selected_eidx}.")
 
 add_expense()
+print(expenses) #debug text
 edit_expense()
