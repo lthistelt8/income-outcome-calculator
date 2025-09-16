@@ -68,5 +68,7 @@ def get_expense_detail():
             continue
         if confirm == 'n':
             return get_expense_detail
+
         print(cat, expense_name, expense_amount) #debug text
+
         return cat, expense_name, expense_amount
