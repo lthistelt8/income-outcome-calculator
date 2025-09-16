@@ -8,7 +8,7 @@ expenses = {}
 
 def add_expense(category, expense_name, expense_amount):
     """
-    Arguments are pulled from the helper function to create and append an 'expense' dictionary.
+    Parameters are passed from get_expense_detail() as arguments to create an expense dictionary object.
     """
     get_expense_detail()
     expense = {
@@ -62,3 +62,6 @@ def edit_expense():
 
         selected_eidx = list(expenses[selected_cidx])[eidx - 1]
         print(f"Now editing {selected_eidx}.")
+
+add_expense()
+edit_expense()
