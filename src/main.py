@@ -7,9 +7,15 @@ from src.expense_entry import get_expense_detail, Category
 expenses = {}
 
 def group_expenses(expenses):
-    if isinstance(expenses, dict):
-        return expenses
-    return "No expenses found."
+    grouped = dict[str, list[dict]] = {}
+    #expected format: ['Category'{'expense name': _, 'expense amount: _}]
+    for exp in expenses or []:
+        cat = exp.get('category') or 'Uncategorized'
+        grouped.setdefault(cat, []).append({
+            'expense name': exp['expense_name'],
+            'expense amount': float(exp['expense amount'])
+        })
+    return grouped
 
 def show_grouped_expenses():
     grouped_expenses = group_expenses(expenses)
