@@ -133,11 +133,12 @@ def update_expense():
         f"Updated expense: {expenses['expense name']} - ${expenses['expense amount']:.2f}"
     )
 
-print("**ADD EXPENSE**")
-add_expense()
-print("\n**SHOW EXPENSES**")
-show_grouped_expenses()
-print("\n**UPDATE EXPENSE**")
-update_expense()
-print("\n**SHOW UPDATED EXPENSE**")
-show_grouped_expenses()
+def debug_menu():
+    print("**ADD EXPENSE**")
+    add_expense()
+    print("\n**SHOW EXPENSES**")
+    show_grouped_expenses()
+    print("\n**UPDATE EXPENSE**")
+    update_expense()
+    print("\n**SHOW UPDATED EXPENSE**")
+    show_grouped_expenses()
