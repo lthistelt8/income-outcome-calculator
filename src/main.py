@@ -51,7 +51,7 @@ def edit_expense():
         return None
 
     for i, cat in enumerate(Category, 1):
-        print(f"{i}. {cat}")
+        print(f"{i}. =={cat}==")
 
     print("Enter the corresponding category number, or 0 to cancel at any time.")
     while True:
@@ -82,20 +82,28 @@ def edit_expense():
         print(f"Now editing {selected_eidx['expense name']}.")
 
         print("\nEnter new expense name, or Enter to keep the current name.")
-        new_exp_name = input("> ")
+        new_exp_name = input("> ").strip()
         if new_exp_name == "":
             new_exp_name = selected_eidx['expense name']
 
-        print("Enter new expense amount, or Enter to keep the current amount. ")
-        try:
-            new_exp_amount = float(input("> "))
-            if new_exp_amount == "":
+        while True:
+            print("Enter new expense amount, or Enter to keep the current value.")
+            new_exp_amount = input("> ").strip()
+
+            if new_exp_amount == "": #check for "Enter" input before validating float type
                 new_exp_amount = selected_eidx['expense amount']
-        except ValueError:
-            print("Please enter a numerical value.")
+                break
+
+            try:
+                new_exp_amount = float(new_exp_amount)
+                break
+            except ValueError:
+                print("Please enter a numerical value.")
+
+            break
 
         print(
-            f"{new_exp_name} - ${new_exp_amount:.2f} in {cidx}? (y/n"
+            f"{new_exp_name} - ${new_exp_amount:.2f} in {selected_cidx}? (y/n)"
         )
         print("Update expense?")
 
@@ -110,6 +118,7 @@ def edit_expense():
                 print("Returning to main menu...")
                 break
 
+            print(cidx, new_exp_name, new_exp_amount)
             return cidx, new_exp_name, new_exp_amount
 
 
