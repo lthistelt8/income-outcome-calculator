@@ -6,6 +6,23 @@ from src.expense_entry import get_expense_detail
 
 expenses = {}
 
+def group_expenses(expenses):
+    if isinstance(expenses, dict):
+        return list(expenses)
+    return "No expenses found."
+
+def show_grouped_expenses():
+    grouped_expenses = group_expenses(expenses)
+
+    for cat in grouped_expenses:
+        print(f"\n=={cat}==")
+        for e, exp in enumerate(expenses, 1):
+            print(
+                f"{e}. {exp['expense name']} - ${exp['expense amount']:.2f}"
+            )
+
+
+
 def add_expense():
     """
     Parameters are passed from get_expense_detail() as arguments to create an expense dictionary object.
@@ -62,4 +79,4 @@ def edit_expense():
         print(f"Now editing {selected_eidx}.")
 
 add_expense()
-print(expenses) #debug text
+group_expenses(expenses) #debug text
