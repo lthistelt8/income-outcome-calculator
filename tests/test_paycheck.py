@@ -26,3 +26,11 @@ class TestExpense(u.TestCase):
         """Test the del_expense() function"""
         #requires dummy expenses, or save a test version of expenses
         del_expense()
+
+    def test_edit_expense(self):
+        """Test edit_expense() function"""
+
+        expenses.clear()
+
+        with um.patch('src.main.edit_expense', return_value = None):
+            edit_expense()
