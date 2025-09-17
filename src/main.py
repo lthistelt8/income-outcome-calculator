@@ -116,14 +116,19 @@ def edit_expense():
                 break
 
             print(cidx, new_exp_name, new_exp_amount)
-            return new_exp_name, new_exp_amount
+            return cidx, new_exp_name, new_exp_amount
 
 def update_expense():
     """Update expense data based on returned values from edit_expense()"""
-    new_expense_name, new_expense_amount = edit_expense()
+    category, new_expense_name, new_expense_amount = edit_expense()
     #even if values are unchanged, this should properly update
-    expenses['expense name'] = new_expense_name
-    expenses['expense amount'] = new_expense_amount
+    new_expense = {
+        'category': category,
+        'expense name': new_expense_name,
+        'expense amount': new_expense_amount
+    }
+
+    expenses.update(new_expense)
     print(
         f"Updated expense: {expenses['expense name']} - ${expenses['expense amount']:.2f}"
     )
