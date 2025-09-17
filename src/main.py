@@ -75,11 +75,13 @@ def edit_expense():
         selected_eidx = list(expenses[selected_cidx])[eidx - 1]
 
         print(f"\nNow editing {str(selected_eidx)}.")
+        #specifying 'str' prevents KeyErrors down the line
         print("Enter new expense name, or Enter to keep the current name.")
 
         new_exp_name = input("> ").strip()
         if new_exp_name == "":
             new_exp_name = name
+            #name is still equivalent to the earlier referenced 'name'
 
         while True:
             print("Enter new expense amount, or Enter to keep the current value.")
@@ -126,7 +128,9 @@ def update_expense():
         f"Updated expense: {new_expense_name} - ${new_expense_amount:.2f}"
     )
 
-def debug_menu():
+def debug_menu(): #placeholder for a proper menu, which will eventually be extracted and fleshed out
+    #as its own module
+    """Manually run functions to verify user functionality."""
     print("**ADD EXPENSE**")
     add_expense()
     print("\n**SHOW EXPENSES**")
