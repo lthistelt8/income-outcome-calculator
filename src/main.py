@@ -15,6 +15,7 @@ def group_expenses(expenses):
             'expense name': exp['expense_name'],
             'expense amount': float(exp['expense amount'])
         })
+
     return grouped
 
 def show_grouped_expenses():
