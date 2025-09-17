@@ -81,6 +81,38 @@ def edit_expense():
         selected_eidx = list(expenses[selected_cidx])[eidx - 1]
         print(f"Now editing {selected_eidx['expense name']}.")
 
+        print("\nEnter new expense name, or Enter to keep the current name.")
+        new_exp_name = input("> ")
+        if new_exp_name == "":
+            new_exp_name = selected_eidx['expense name']
+
+        print("Enter new expense amount, or Enter to keep the current amount. ")
+        try:
+            new_exp_amount = float(input("> "))
+            if new_exp_amount == "":
+                new_exp_amount = selected_eidx['expense amount']
+        except ValueError:
+            print("Please enter a numerical value.")
+
+        print(
+            f"{new_exp_name} - ${new_exp_amount:.2f} in {cidx}? (y/n"
+        )
+        print("Update expense?")
+
+        while True:
+            confirm = str(input("> "))
+            if confirm not in ('y', 'n'):
+                print("Invalid input. Enter 'y' or 'n'.")
+                continue
+
+            if confirm == 'n':
+                print("Edit cancelled.")
+                print("Returning to main menu...")
+                break
+
+            return cidx, new_exp_name, new_exp_amount
+
+
 add_expense()
 print()
 edit_expense()
