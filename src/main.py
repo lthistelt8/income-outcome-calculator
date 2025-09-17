@@ -23,11 +23,11 @@ def show_grouped_expenses():
 
 
 def add_expense():
-    """
-    Parameters are passed from get_expense_detail() as arguments to create an expense dictionary object.
-    """
     category, expense_name, expense_amount = get_expense_detail()
+    add_expense_core(category, expense_name, expense_amount)
 
+def add_expense_core(category, expense_name, expense_amount):
+    """Handles the actual mutation of expenses dictionary"""
     expenses.setdefault(category, {})
     expenses[category][expense_name] = expense_amount #properly creates a dict of dicts
     # in the "category" dict, the "expense_name" is set to the "expense_amount"
