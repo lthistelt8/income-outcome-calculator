@@ -79,9 +79,10 @@ def edit_expense():
             continue
 
         selected_eidx = list(expenses[selected_cidx])[eidx - 1]
-        print(f"Now editing {selected_eidx['expense name']}.")
 
-        print("\nEnter new expense name, or Enter to keep the current name.")
+        print(f"\nNow editing {selected_eidx['expense name']}.")
+        print("Enter new expense name, or Enter to keep the current name.")
+
         new_exp_name = input("> ").strip()
         if new_exp_name == "":
             new_exp_name = selected_eidx['expense name']
@@ -119,7 +120,7 @@ def edit_expense():
                 break
 
             print(cidx, new_exp_name, new_exp_amount)
-            return cidx, new_exp_name, new_exp_amount
+            return new_exp_name, new_exp_amount
 
 def update_expense():
     """Update expense data based on returned values from edit_expense()"""
