@@ -119,16 +119,20 @@ def edit_expense():
             return selected_cidx, selected_eidx, new_exp_name, new_exp_amount
 
 def update_expense():
-    """Update expense data based on returned values from edit_expense()"""
     category, former_expense, new_expense_name, new_expense_amount = edit_expense()
+    update_expense_core(category, former_expense, new_expense_name, new_expense_amount)
     #values will update regardless of user input
 
-    del expenses[category][former_expense]
-    #deletes old expense
-    expenses[category][new_expense_name] = new_expense_amount
     print(
         f"Updated expense: {new_expense_name} - ${new_expense_amount:.2f}"
     )
+
+def update_expense_core(category, former_expense, new_expense, new_amount):
+    """Deletes expense, replaces it with updated expense"""
+
+    del expenses[category][former_expense]
+    #deletes old expense
+    expenses[category][new_expense] = new_expense
 
 def debug_menu(): #placeholder for a proper menu, which will eventually be extracted and fleshed out
     #as its own module
