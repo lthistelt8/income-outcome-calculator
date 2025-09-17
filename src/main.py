@@ -115,14 +115,16 @@ def edit_expense():
                 print("Returning to main menu...")
                 break
 
-            print(selected_cidx, new_exp_name, new_exp_amount)
-            return selected_cidx, new_exp_name, new_exp_amount
+            print(selected_cidx, selected_eidx, new_exp_name, new_exp_amount) #debug text
+            return selected_cidx, selected_eidx, new_exp_name, new_exp_amount
 
 def update_expense():
     """Update expense data based on returned values from edit_expense()"""
-    category, new_expense_name, new_expense_amount = edit_expense()
-    #even if values are unchanged, this should properly update
+    category, former_expense, new_expense_name, new_expense_amount = edit_expense()
+    #values will update regardless of user input
 
+    del expenses[category][former_expense]
+    #deletes old expense
     expenses[category][new_expense_name] = new_expense_amount
     print(
         f"Updated expense: {new_expense_name} - ${new_expense_amount:.2f}"
