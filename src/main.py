@@ -2,7 +2,7 @@
 Business logic that the user will execute through an implemented main menu
 """
 
-from src.expense_entry import get_expense_detail
+from src.expense_entry import get_expense_detail, Category
 
 expenses = {}
 
@@ -66,7 +66,7 @@ def edit_expense():
 
         selected_cidx = list(Category)[cidx - 1]
         for e, exp in enumerate(expenses[selected_cidx], 1):
-            print(f"{e}. {exp}")
+            print(f"{e}. {exp['expense name']} - ${exp['expense amount']:.2f}")
 
         print("Enter the corresponding expense number.")
         eidx = int(input("> "))
@@ -79,7 +79,8 @@ def edit_expense():
             continue
 
         selected_eidx = list(expenses[selected_cidx])[eidx - 1]
-        print(f"Now editing {selected_eidx}.")
+        print(f"Now editing {selected_eidx['expense name']}.")
 
 add_expense()
-show_grouped_expenses() #debug text
+print()
+edit_expense()
