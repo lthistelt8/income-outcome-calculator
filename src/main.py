@@ -123,5 +123,9 @@ def edit_expense():
 
 
 add_expense()
-print()
+print("==")
+show_grouped_expenses()
+print("==")
 edit_expense()
+print("==")
+show_grouped_expenses()
