@@ -6,18 +6,19 @@ from src.expense_entry import get_expense_detail, Category
 
 expenses: dict = {}
 
-def group_expenses(expenses):
-    if isinstance(expenses, dict):
+def group_expenses(expense_list):
+    if isinstance(expense_list, dict):
         return expenses
     return {}
 
 def show_grouped_expenses():
-    grouped_expenses = group_expenses(expenses)
+    grouped_expenses: dict = group_expenses(expenses)
 
     for cat in grouped_expenses:
         print(f"\n=={cat}==")
-        for expense in list(expenses[cat]):
-            print(f"{expense['expense name']} - ${expense['expense amount']:.2f}")
+        print(type(grouped_expenses[cat])) #debug text
+        for (name, amount) in grouped_expenses[cat].items():
+            print(f"{name} - ${amount:.2f}")
 
 
 
@@ -33,7 +34,8 @@ def add_expense():
         'expense amount': expense_amount
     }
 
-    expenses.setdefault(category, []).append(expense)
+    expenses.setdefault(category, {})
+    expenses.update(expense)
 
 def del_expense():
     """Delete expenses - not yet implemented"""
@@ -122,7 +124,7 @@ def update_expense():
     """Update expense data based on returned values from edit_expense()"""
     category, new_expense_name, new_expense_amount = edit_expense()
     #even if values are unchanged, this should properly update
-    new_expense = {
+    new_expense: dict = {
         'category': category,
         'expense name': new_expense_name,
         'expense amount': new_expense_amount
@@ -142,3 +144,5 @@ def debug_menu():
     update_expense()
     print("\n**SHOW UPDATED EXPENSE**")
     show_grouped_expenses()
+
+debug_menu()
