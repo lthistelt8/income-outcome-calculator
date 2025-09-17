@@ -15,8 +15,7 @@ def show_grouped_expenses():
     grouped_expenses: dict = group_expenses(expenses)
 
     for cat in grouped_expenses:
-        print(f"\n=={cat}==")
-        print(type(grouped_expenses[cat])) #debug text
+        print(f"\n=={cat}==", type(grouped_expenses[cat])) #debug text
         for (name, amount) in grouped_expenses[cat].items():
             print(f"{name} - ${amount:.2f}")
 
@@ -59,8 +58,9 @@ def edit_expense():
             continue
 
         selected_cidx = list(Category)[cidx - 1]
-        for e, exp in enumerate(expenses[selected_cidx], 1):
-            print(f"{e}. {exp['expense name']} - ${exp['expense amount']:.2f}")
+        for e, (name, amount) in enumerate(expenses[selected_cidx].items(), 1):
+            print(f"{e}. {name} - ${amount:.2f}")
+
 
         print("Enter the corresponding expense number.")
         eidx = int(input("> "))
@@ -74,19 +74,19 @@ def edit_expense():
 
         selected_eidx = list(expenses[selected_cidx])[eidx - 1]
 
-        print(f"\nNow editing {selected_eidx['expense name']}.")
+        print(f"\nNow editing {str(selected_eidx)}.")
         print("Enter new expense name, or Enter to keep the current name.")
 
         new_exp_name = input("> ").strip()
         if new_exp_name == "":
-            new_exp_name = selected_eidx['expense name']
+            new_exp_name = name
 
         while True:
             print("Enter new expense amount, or Enter to keep the current value.")
-            new_exp_amount = input("> ").strip()
+            new_exp_amount = (input("> ").strip())
 
             if new_exp_amount == "": #check for "Enter" input before validating float type
-                new_exp_amount = selected_eidx['expense amount']
+                new_exp_amount = float(amount)
                 break
 
             try:
@@ -113,8 +113,8 @@ def edit_expense():
                 print("Returning to main menu...")
                 break
 
-            print(cidx, new_exp_name, new_exp_amount)
-            return cidx, new_exp_name, new_exp_amount
+            print(selected_cidx, new_exp_name, new_exp_amount)
+            return selected_cidx, new_exp_name, new_exp_amount
 
 def update_expense():
     """Update expense data based on returned values from edit_expense()"""
@@ -123,7 +123,7 @@ def update_expense():
 
     expenses[category][new_expense_name] = new_expense_amount
     print(
-        f"Updated expense: {expenses['expense name']} - ${expenses['expense amount']:.2f}"
+        f"Updated expense: {new_expense_name} - ${new_expense_amount:.2f}"
     )
 
 def debug_menu():
