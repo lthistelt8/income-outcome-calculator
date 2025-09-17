@@ -132,7 +132,7 @@ def update_expense_core(category, former_expense, new_expense, new_amount):
 
     del expenses[category][former_expense]
     #deletes old expense
-    expenses[category][new_expense] = new_expense
+    expenses[category][new_expense] = new_amount
 
 def debug_menu(): #placeholder for a proper menu, which will eventually be extracted and fleshed out
     #as its own module
