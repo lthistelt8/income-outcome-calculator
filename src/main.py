@@ -121,6 +121,9 @@ def edit_expense():
             print(cidx, new_exp_name, new_exp_amount)
             return cidx, new_exp_name, new_exp_amount
 
+def update_expense():
+    """Update expense data based on returned values from edit_expense()"""
+    expense_name, expense_amount = edit_expense()
 
 add_expense()
 print("==")
