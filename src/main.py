@@ -4,25 +4,21 @@ Business logic that the user will execute through an implemented main menu
 
 from src.expense_entry import get_expense_detail, Category
 
-expenses = {}
+expenses: dict = {}
 
 def group_expenses(expenses):
     if isinstance(expenses, dict):
         return expenses
-    return "No expenses found."
+    return {}
 
 def show_grouped_expenses():
     grouped_expenses = group_expenses(expenses)
 
     for cat in grouped_expenses:
         print(f"\n=={cat}==")
-        for exp in grouped_expenses[cat]:
-            if isinstance(exp, dict):
-                print(
-                    f"* {exp['expense name']}: ${exp['expense amount']:.2f}"
-                )
-            else:
-                print("Unexpected:", type(exp), exp)
+        for expense in expenses[cat]:
+            print(f"{expense['expense name']} - ${expense['expense amount']:.2f}")
+
 
 
 
@@ -133,9 +129,9 @@ def update_expense():
     )
 
 add_expense()
-print("==")
+print("\nGROUP EXP 1")
 show_grouped_expenses()
-print("==")
+print("**")
 update_expense()
-print("==")
+print("\nGROUP EXP 2")
 show_grouped_expenses()
