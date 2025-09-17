@@ -3,7 +3,7 @@ Contains test functions for source code + business logic
 """
 import unittest as u
 import unittest.mock as um
-from src.main import expenses, add_expense, del_expense
+from src.main import expenses, add_expense_core, del_expense, edit_expense
 
 class TestExpense(u.TestCase):
     """Test business logic for expenses"""
@@ -14,7 +14,7 @@ class TestExpense(u.TestCase):
         expenses.clear()
 
         with um.patch('src.main.get_expense_detail', return_value = None):
-            add_expense('Fixed', 'Mortgage', 90)
+            add_expense_core('Fixed', 'Mortgage', 90)
 
             assert 'Fixed' in expenses
 
