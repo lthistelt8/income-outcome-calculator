@@ -28,14 +28,10 @@ def add_expense():
     Parameters are passed from get_expense_detail() as arguments to create an expense dictionary object.
     """
     category, expense_name, expense_amount = get_expense_detail()
-    expense = {
-        'category': category,
-        'expense name': expense_name,
-        'expense amount': expense_amount
-    }
 
     expenses.setdefault(category, {})
-    expenses.update(expense)
+    expenses[category][expense_name] = expense_amount #properly creates a dict of dicts
+    # in the "category" dict, the "expense_name" is set to the "expense_amount"
 
 def del_expense():
     """Delete expenses - not yet implemented"""
@@ -124,13 +120,8 @@ def update_expense():
     """Update expense data based on returned values from edit_expense()"""
     category, new_expense_name, new_expense_amount = edit_expense()
     #even if values are unchanged, this should properly update
-    new_expense: dict = {
-        'category': category,
-        'expense name': new_expense_name,
-        'expense amount': new_expense_amount
-    }
 
-    expenses.update(new_expense)
+    expenses[category][new_expense_name] = new_expense_amount
     print(
         f"Updated expense: {expenses['expense name']} - ${expenses['expense amount']:.2f}"
     )
