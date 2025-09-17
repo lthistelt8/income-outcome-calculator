@@ -8,7 +8,7 @@ expenses = {}
 
 def group_expenses(expenses):
     if isinstance(expenses, dict):
-        return list(expenses)
+        return expenses
     return "No expenses found."
 
 def show_grouped_expenses():
@@ -16,10 +16,13 @@ def show_grouped_expenses():
 
     for cat in grouped_expenses:
         print(f"\n=={cat}==")
-        for e, exp in enumerate(expenses, 1):
-            print(
-                f"{e}. {exp['expense name']} - ${exp['expense amount']:.2f}"
-            )
+        for exp in grouped_expenses[cat]:
+            if isinstance(exp, dict):
+                print(
+                    f"* {exp['expense name']}: ${exp['expense amount']:.2f}"
+                )
+            else:
+                print("Unexpected:", type(exp), exp)
 
 
 
@@ -79,4 +82,4 @@ def edit_expense():
         print(f"Now editing {selected_eidx}.")
 
 add_expense()
-group_expenses(expenses) #debug text
+show_grouped_expenses() #debug text
