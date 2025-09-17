@@ -124,12 +124,18 @@ def edit_expense():
 
 def update_expense():
     """Update expense data based on returned values from edit_expense()"""
-    expense_name, expense_amount = edit_expense()
+    new_expense_name, new_expense_amount = edit_expense()
+    #even if values are unchanged, this should properly update
+    expenses['expense name'] = new_expense_name
+    expenses['expense amount'] = new_expense_amount
+    print(
+        f"Updated expense: {expenses['expense name']} - ${expenses['expense amount']:.2f}"
+    )
 
 add_expense()
 print("==")
 show_grouped_expenses()
 print("==")
-edit_expense()
+update_expense()
 print("==")
 show_grouped_expenses()
