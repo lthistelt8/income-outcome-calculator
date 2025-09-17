@@ -16,7 +16,7 @@ def show_grouped_expenses():
 
     for cat in grouped_expenses:
         print(f"\n=={cat}==")
-        for expense in expenses[cat]:
+        for expense in list(expenses[cat]):
             print(f"{expense['expense name']} - ${expense['expense amount']:.2f}")
 
 
@@ -128,10 +128,11 @@ def update_expense():
         f"Updated expense: {expenses['expense name']} - ${expenses['expense amount']:.2f}"
     )
 
+print("**ADD EXPENSE**")
 add_expense()
-print("\nGROUP EXP 1")
+print("\n**SHOW EXPENSES**")
 show_grouped_expenses()
-print("**")
+print("\n**UPDATE EXPENSE**")
 update_expense()
-print("\nGROUP EXP 2")
+print("\n**SHOW UPDATED EXPENSE**")
 show_grouped_expenses()
