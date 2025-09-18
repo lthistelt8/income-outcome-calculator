@@ -2,7 +2,7 @@
 Contains test functions for source code + business logic
 """
 import unittest as u
-from src.main import expenses, add_expense_core, del_expense, update_expense_core
+from src.main import expenses, add_expense_core, del_expense, update_expense_core, Category
 
 
 class TestExpense(u.TestCase):
@@ -52,5 +52,5 @@ class TestExpense(u.TestCase):
                 self.assertEqual(expenses[cat]['pytest'], 2.0)
                 #asserts that the value of 'pytest' in the expenses' categories all equal 2.0
 
-                self.assertNotIn('test', expenses['cat'])
+                self.assertNotIn('test', expenses[cat])
                 #asserts that 'test' has been removed from the expense dictionary
