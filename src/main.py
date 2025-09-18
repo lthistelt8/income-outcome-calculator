@@ -130,9 +130,9 @@ def update_expense():
 def update_expense_core(category, former_expense, new_expense, new_amount):
     """Deletes expense, replaces it with updated expense"""
 
-    del expenses[category][former_expense]
+    expenses[category.value].pop(former_expense, None)
     #deletes old expense
-    expenses[category][new_expense] = new_amount
+    expenses[category.value][new_expense] = new_amount
 
 def debug_menu(): #placeholder for a proper menu, which will eventually be extracted and fleshed out
     #as its own module
@@ -145,5 +145,3 @@ def debug_menu(): #placeholder for a proper menu, which will eventually be extra
     update_expense()
     print("\n**SHOW UPDATED EXPENSE**")
     show_grouped_expenses()
-
-debug_menu()
