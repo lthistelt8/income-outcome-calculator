@@ -8,10 +8,11 @@ from src.main import expenses, add_expense_core, del_expense, update_expense_cor
 class TestExpense(u.TestCase):
     """Test business logic for expenses"""
 
+    def initial(self):
+        self.expenses = {}
+
     def test_add_expense(self):
         """Test the add_expense() function"""
-
-        expenses.clear()
 
         with um.patch('src.main.get_expense_detail', return_value = None):
             add_expense_core('Automatic', 'Mortgage', 90)
@@ -29,7 +30,6 @@ class TestExpense(u.TestCase):
     def test_edit_expense_name_only(self):
         """Test edit_expense() function when only the name is changed"""
 
-        expenses.clear()
 
         with um.patch('src.main.edit_expense', return_value = None):
             update_expense_core('Automatic', 'test', 'pytest', '2')
