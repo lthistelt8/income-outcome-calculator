@@ -37,7 +37,6 @@ def add_expense_core(category, expense_name, expense_amount):
     # in the "category" dict, the "expense_name" is set to the "expense_amount"
 
 def del_expense():
-    """Delete expenses - not yet implemented"""
     if not any(expenses.values()):
         print("No expenses available for deletion.")
         return None
@@ -88,7 +87,11 @@ def del_expense():
 
             return selected_didx
 
+def del_expense_core(selected_didx):
+    selected_didx = del_expense()
 
+    del expenses[selected_didx]
+    print(f"{selected_didx} successfully deleted.")
 
 
 def edit_expense():
