@@ -20,8 +20,6 @@ def show_grouped_expenses():
             print(f"{name} - ${amount:.2f}")
 
 
-
-
 def add_expense():
     category, expense_name, expense_amount = get_expense_detail()
     add_expense_core(category, expense_name, expense_amount)
@@ -36,6 +34,7 @@ def del_expense():
     """Delete expenses - not yet implemented"""
     print("Feature not yet implemented: delete expense.")
     return None
+
 
 def edit_expense():
     """Edit expense details."""

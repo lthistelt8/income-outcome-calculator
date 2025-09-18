@@ -1,6 +1,6 @@
 """Take user input to return as parameters to pass through business logic"""
 
-from enum import StrEnum, auto
+from enum import StrEnum
 
 class Category(StrEnum):
     """A list of enumerated categories for expenses"""

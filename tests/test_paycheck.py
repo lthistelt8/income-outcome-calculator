@@ -25,7 +25,6 @@ class TestExpense(u.TestCase):
                 self.assertIn('pytest', expenses[cat])
                 self.assertEqual(expenses[cat]['pytest'], 2.0)
 
-
     def test_del_expense_empty_expenses(self):
         """Test the del_expense() function"""
         #requires dummy expenses, or save a test version of expenses
