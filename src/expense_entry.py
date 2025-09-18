@@ -4,13 +4,10 @@ from enum import StrEnum, auto
 
 class Category(StrEnum):
     """A list of enumerated categories for expenses"""
-    AUTOMATIC = auto()
-    VARIABLE = auto()
-    CREDIT_CARD = auto()
-    ONE_TIME_EXPENSE = auto()
-
-    def __str__(self):
-        return self.name.replace("_", " ").title()
+    AUTOMATIC = "Automatic"
+    VARIABLE = "Variable"
+    CREDIT_CARD = "Credit Card"
+    ONE_TIME_EXPENSE = "One Time Expense"
 
 def get_expense_detail():
     """Collects and returns expense details.
