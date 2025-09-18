@@ -14,13 +14,17 @@ class TestExpense(u.TestCase):
     def test_add_expense(self):
         """Test the add_expense() function"""
 
-        with um.patch('src.main.get_expense_detail', return_value = None):
-            add_expense_core('Automatic', 'Mortgage', 90)
+        for cat in Category:
+            with self.subTest(cat = cat):
+                #subTest will run tests across all four categories
+                self.initial()
 
-            assert 'Automatic' in expenses
+                add_expense_core(cat, 'test', 2.0)
 
-            assert 'Mortgage' in expenses['Automatic']
-            assert expenses['Automatic']['Mortgage'] == 90
+                self.assertIn(cat, expenses)
+                self.assertIn('pytest', expenses[cat])
+                self.assertEqual(expenses[cat]['pytest'], 2.0)
+
 
     def test_del_expense_empty_expenses(self):
         """Test the del_expense() function"""
@@ -30,11 +34,23 @@ class TestExpense(u.TestCase):
     def test_edit_expense_name_only(self):
         """Test edit_expense() function when only the name is changed"""
 
+        for cat in Category:
+            with self.subTest(cat = cat):
+                self.initial()
 
-        with um.patch('src.main.edit_expense', return_value = None):
-            update_expense_core('Automatic', 'test', 'pytest', '2')
+                add_expense_core(cat, 'test', 2.0)
+                #will run same test with all four categories
 
-            assert 'Automatic' in expenses
+                update_expense_core(cat, 'test', 'pytest', 2.0)
 
-            assert 'pytest' in expenses['Automatic']
-            assert expenses['Automatic']['pytest'] == 2
+                self.assertIn(cat, expenses)
+                #asserts that categories exist in expenses
+
+                self.assertIn('pytest', expenses[cat])
+                #asserts that 'pytest' appears in the categories
+
+                self.assertEqual(expenses[cat]['pytest'], 2.0)
+                #asserts that the value of 'pytest' in the expenses' categories all equal 2.0
+
+                self.assertNotIn('test', expenses['cat'])
+                #asserts that 'test' has been removed from the expense dictionary
