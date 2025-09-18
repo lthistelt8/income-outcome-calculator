@@ -2,7 +2,7 @@
 Contains test functions for source code + business logic
 """
 import unittest as u
-from src.main import expenses, add_expense_core, del_expense, update_expense_core, Category
+from src.main import expenses, add_expense_core, del_expense_core, update_expense_core, Category
 
 
 class TestExpense(u.TestCase):
@@ -25,10 +25,19 @@ class TestExpense(u.TestCase):
                 self.assertIn('test', expenses[cat])
                 self.assertEqual(expenses[cat]['test'], 2.0)
 
-    def test_del_expense_empty_expenses(self):
+    def test_del_expense(self):
         """Test the del_expense() function"""
-        #requires dummy expenses, or save a test version of expenses
-        del_expense()
+
+        for cat in Category:
+            with self.subTest(cat = cat):
+                self.initial()
+
+                add_expense_core(cat, 'test', 2.0)
+                del_expense_core(cat, 'test')
+
+                self.assertNotIn('test', expenses[cat])
+                self.assertNotEqual(expenses[cat], 'test')
+
 
     def test_edit_expense_name_only(self):
         """Test edit_expense() function when only the name is changed"""
