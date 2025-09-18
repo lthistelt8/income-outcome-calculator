@@ -4,7 +4,8 @@ Business logic that the user will execute through an implemented main menu
 
 from src.expense_entry import get_expense_detail, Category
 
-expenses: dict = {}
+expenses: dict[Category, dict[str, float]] = {}
+#expenses format: a dictionary of Categories, which is another dictionary of [str, float] formatted key:pairs
 
 def group_expenses(expense_list):
     if isinstance(expense_list, dict):
@@ -15,7 +16,8 @@ def show_grouped_expenses():
     grouped_expenses: dict = group_expenses(expenses)
 
     for cat in grouped_expenses:
-        print(f"\n=={cat}==", type(grouped_expenses[cat])) #debug text
+        print(f"\n=={cat}==", type(grouped_expenses[cat]))
+        #debug text; displays the data type of the category within 'grouped_expenses'
         for (name, amount) in grouped_expenses[cat].items():
             #for each name:amount pair in each category of grouped expenses
             print(f"{name} - ${amount:.2f}")
@@ -121,7 +123,8 @@ def edit_expense():
                 print("Returning to main menu...")
                 break
 
-            print(selected_cidx, selected_eidx, new_exp_name, new_exp_amount) #debug text
+            print(selected_cidx, selected_eidx, new_exp_name, new_exp_amount)
+            #debug text; displays the values that are to be returned for use in 'update_expense'
             return selected_cidx, selected_eidx, new_exp_name, new_exp_amount
 
 def update_expense():
