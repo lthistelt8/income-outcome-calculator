@@ -38,6 +38,7 @@ def add_expense_core(category, expense_name, expense_amount):
 
 
 def del_expense():
+    """Collects input to pass through helper functions"""
     if not any(expenses.values()):
         print("No expenses available for deletion.")
         return None
@@ -89,6 +90,7 @@ def del_expense():
             return selected_cidx, selected_didx
 
 def pop_expense():
+    """Helper function that facilitates calling and returning values"""
     category, didx = del_expense()
     del_expense_core(category, didx)
 
