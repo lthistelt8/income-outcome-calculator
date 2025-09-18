@@ -17,12 +17,16 @@ def show_grouped_expenses():
     for cat in grouped_expenses:
         print(f"\n=={cat}==", type(grouped_expenses[cat])) #debug text
         for (name, amount) in grouped_expenses[cat].items():
+            #for each name:amount pair in each category of grouped expenses
             print(f"{name} - ${amount:.2f}")
 
 
 def add_expense():
     category, expense_name, expense_amount = get_expense_detail()
+    #values assigned to function can immediately be called
+
     add_expense_core(category, expense_name, expense_amount)
+    #aforementioned values are used to execute this function call
 
 def add_expense_core(category, expense_name, expense_amount):
     """Handles the actual mutation of expenses dictionary"""
@@ -53,6 +57,8 @@ def edit_expense():
             return None
 
         if not 1 <= cidx <= len(list(Category)):
+            #for dict of dicts, iterating through a list is fine, as long as
+            #said list isn't then used to call a value
             print(f"Selection out of range. Please select 1-{len(Category)}.")
             continue
 
@@ -92,6 +98,7 @@ def edit_expense():
 
             try:
                 new_exp_amount = float(new_exp_amount)
+                #the new expense amount is validated as a float before being allowed to pass
                 break
             except ValueError:
                 print("Please enter a numerical value.")
@@ -129,7 +136,7 @@ def update_expense():
     )
 
 def update_expense_core(category, former_expense, new_expense, new_amount):
-    """Deletes expense, replaces it with updated expense"""
+    """Deletes old expense, replaces it with updated expense"""
 
     expenses[category].pop(former_expense, None)
     #deletes old expense
