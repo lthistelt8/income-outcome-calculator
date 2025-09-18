@@ -38,8 +38,57 @@ def add_expense_core(category, expense_name, expense_amount):
 
 def del_expense():
     """Delete expenses - not yet implemented"""
-    print("Feature not yet implemented: delete expense.")
-    return None
+    if not any(expenses.values()):
+        print("No expenses available for deletion.")
+        return None
+
+    for i, cat in enumerate(Category, 1):
+        print(f"{i}. =={cat}==")
+
+    print("Enter the corresponding category number, or 0 to cancel at any time.")
+    while True:
+        cidx = int(input("> "))
+        if cidx == 0:
+            print("Deletion cancelled.")
+            return None
+
+        if not 1 <= cidx <= len(list(Category)):
+            print(f"Selection out of range. Enter 1-{len(list(Category))}.")
+            continue
+
+        selected_cidx = list(Category)[cidx - 1]
+        for e, (name, amount) in enumerate(expenses[selected_cidx].items(), 1):
+            print(f"{e}. {name} - ${amount:.2f}")
+
+        print("Enter the corresponding expense number.")
+        didx = int(input("> "))
+        if didx == 0:
+            print("Deletion cancelled.")
+            return None
+
+        if not 1 <= didx <= len(list(expenses[selected_cidx])):
+            print(f"Selection out of range. Please select 1-{len(expenses[selected_cidx])}.")
+            continue
+
+        selected_didx = list(expenses[selected_cidx])[didx - 1]
+
+        for name, amount in selected_didx:
+            print(f"{name} - ${amount:.2f}")
+
+        while True:
+            print(f"Confirm deletion of {name}? DELETION IS IRREVERSIBLE (y/n).")
+
+            confirm = str(input("> "))
+            if confirm not in ('y', 'n'):
+                print("Invalid response. Please enter 'y' or 'n'.")
+                continue
+
+            if confirm == 'n':
+                print("Deletion cancelled.")
+
+            return selected_didx
+
+
 
 
 def edit_expense():
