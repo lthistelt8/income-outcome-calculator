@@ -36,6 +36,7 @@ def add_expense_core(category, expense_name, expense_amount):
     expenses[category][expense_name] = expense_amount #properly creates a dict of dicts
     # in the "category" dict, the "expense_name" is set to the "expense_amount"
 
+
 def del_expense():
     if not any(expenses.values()):
         print("No expenses available for deletion.")
@@ -85,13 +86,17 @@ def del_expense():
             if confirm == 'n':
                 print("Deletion cancelled.")
 
-            return selected_didx
+            return selected_cidx, selected_didx
 
-def del_expense_core(selected_didx):
-    selected_didx = del_expense()
+def pop_expense():
+    category, didx = del_expense()
+    del_expense_core(category, didx)
 
-    del expenses[selected_didx]
-    print(f"{selected_didx} successfully deleted.")
+def del_expense_core(category, didx):
+    """Deletes expense from dictionary"""
+    expenses[category].pop(didx, None)
+
+    print(f"{didx} successfully deleted from {category}.")
 
 
 def edit_expense():
@@ -196,6 +201,8 @@ def update_expense_core(category, former_expense, new_expense, new_amount):
     expenses[category].pop(former_expense, None)
     #deletes old expense
     expenses[category][new_expense] = new_amount
+
+
 
 def debug_menu(): #placeholder for a proper menu, which will eventually be extracted and fleshed out
     #as its own module
