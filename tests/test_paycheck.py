@@ -3,7 +3,7 @@ Contains test functions for source code + business logic
 """
 import unittest as u
 import unittest.mock as um
-from src.main import expenses, add_expense_core, del_expense, edit_expense
+from src.main import expenses, add_expense_core, del_expense, update_expense_core
 
 class TestExpense(u.TestCase):
     """Test business logic for expenses"""
@@ -27,10 +27,14 @@ class TestExpense(u.TestCase):
         #requires dummy expenses, or save a test version of expenses
         del_expense()
 
-    def test_edit_expense(self):
-        """Test edit_expense() function"""
+    def test_edit_expense_name_only(self):
+        """Test edit_expense() function when only the name is changed"""
 
         expenses.clear()
 
         with um.patch('src.main.edit_expense', return_value = None):
-            edit_expense()
+            update_expense_core('Automatic', 'test', 'pytest', '2')
+
+            assert 'Automatic' in expenses
+
+            assert 'pytest' in expenses['Automatic']
