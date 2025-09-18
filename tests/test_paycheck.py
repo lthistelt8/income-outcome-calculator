@@ -14,13 +14,12 @@ class TestExpense(u.TestCase):
         expenses.clear()
 
         with um.patch('src.main.get_expense_detail', return_value = None):
-            add_expense_core('Fixed', 'Mortgage', 90)
+            add_expense_core('Automatic', 'Mortgage', 90)
 
-            assert 'Fixed' in expenses
+            assert 'Automatic' in expenses
 
-            row = expenses['Fixed'][0]
-            assert row ['expense name'] == 'Mortgage'
-            assert row ['expense amount'] == 90
+            assert 'Mortgage' in expenses['Automatic']
+            assert expenses['Automatic']['Mortgage'] == 90
 
     def test_del_expense_empty_expenses(self):
         """Test the del_expense() function"""
@@ -38,3 +37,4 @@ class TestExpense(u.TestCase):
             assert 'Automatic' in expenses
 
             assert 'pytest' in expenses['Automatic']
+            assert expenses['Automatic']['pytest'] == 2
