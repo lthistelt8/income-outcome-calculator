@@ -2,8 +2,8 @@
 Contains test functions for source code + business logic
 """
 import unittest as u
-import unittest.mock as um
 from src.main import expenses, add_expense_core, del_expense, update_expense_core
+
 
 class TestExpense(u.TestCase):
     """Test business logic for expenses"""
