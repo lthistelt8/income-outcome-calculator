@@ -2,10 +2,8 @@
 Business logic that the user will execute through an implemented main menu
 """
 
-from src.expense_entry import get_expense_detail, Category
-
-expenses: dict[Category, dict[str, float]] = {}
-#expenses format: a dictionary of Categories, which is another dictionary of [str, float] formatted key:pairs
+from src.data_entry import get_expense_detail
+from src.expenses import expenses, Category
 
 def group_expenses(expense_list):
     if isinstance(expense_list, dict):
