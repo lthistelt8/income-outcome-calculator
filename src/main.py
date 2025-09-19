@@ -23,7 +23,9 @@ def show_grouped_expenses():
 
 def add_expense():
     category, expense_name, expense_amount = get_expense_detail()
-    #values assigned to function can immediately be called
+    # values assigned to function can immediately be called
+    if get_expense_detail() is None:
+        debug_menu()
 
     add_expense_core(category, expense_name, expense_amount)
     #aforementioned values are used to execute this function call
