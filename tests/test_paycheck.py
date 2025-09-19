@@ -2,7 +2,8 @@
 Contains test functions for source code + business logic
 """
 import unittest as u
-from src.main import expenses, add_expense_core, del_expense_core, update_expense_core, Category
+from src.expenses import expenses, Category
+from src.main import add_expense_core, del_expense_core, update_expense_core, Category
 
 
 class TestExpense(u.TestCase):
