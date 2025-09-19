@@ -22,10 +22,10 @@ def show_grouped_expenses():
 
 
 def add_expense():
-    details = get_expense_detail
+    details = get_expense_detail()
 
     if details is None:
-        return None
+        return debug_menu()
 
     category, expense_name, expense_amount = details
 
