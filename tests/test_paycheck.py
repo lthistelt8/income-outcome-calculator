@@ -3,7 +3,7 @@ Contains test functions for source code + business logic
 """
 import unittest as u
 from src.expenses import expenses, Category
-from src.main import add_expense_core, del_expense_core, update_expense_core
+from src.main import add_expense_core, del_expense_core, update_expense_core, debug_menu
 
 
 class TestExpense(u.TestCase):
@@ -34,6 +34,15 @@ class TestAddExpense(TestExpense):
         """Test the add_expense() function"""
 
         self.run_on_categories(self.assert_add)
+
+    ##--CXL ADDING EXPENSE--
+    def assert_add_graceful_exit(self, cat):
+        cxl = add_expense_core(0,'Exit', 1 )
+
+        self.assertIsNone(cxl)
+
+    def test_add_graceful_exit(self):
+        self.run_on_categories(self.assert_add_graceful_exit)
 
     ##--INVALID CASES--
 

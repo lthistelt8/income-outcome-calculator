@@ -57,7 +57,7 @@ def get_expense_detail():
             print("Invalid input. Please enter 'y' or 'n'.")
             continue
         if confirm == 'n':
-            return get_expense_detail
+            get_expense_detail()
 
         print(cat, expense_name, expense_amount) #debug text
 
