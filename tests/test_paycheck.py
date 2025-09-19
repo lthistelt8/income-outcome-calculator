@@ -12,6 +12,10 @@ class TestExpense(u.TestCase):
     def initial(self):
         self.expenses = {}
 
+class TestAddExpense(TestExpense):
+    def initial(self):
+        super().initial()
+
     def test_add_expense(self):
         """Test the add_expense() function"""
 
@@ -26,21 +30,11 @@ class TestExpense(u.TestCase):
                 self.assertIn('test', expenses[cat])
                 self.assertEqual(expenses[cat]['test'], 2.0)
 
-    def test_del_expense(self):
-        """Test the del_expense() function"""
+class TestUpdateExpense(TestExpense):
+    def initial(self):
+        super().initial()
 
-        for cat in Category:
-            with self.subTest(cat = cat):
-                self.initial()
-
-                add_expense_core(cat, 'test', 2.0)
-                del_expense_core(cat, 'test')
-
-                self.assertNotIn('test', expenses[cat])
-                self.assertNotEqual(expenses[cat], 'test')
-
-
-    def test_edit_expense_name_only(self):
+    def test_update_expense_name_only(self):
         """Test edit_expense() function when only the name is changed"""
 
         for cat in Category:
@@ -63,3 +57,21 @@ class TestExpense(u.TestCase):
 
                 self.assertNotIn('test', expenses[cat])
                 #asserts that 'test' has been removed from the expense dictionary
+
+class TestDeleteExpense(TestExpense):
+    def initial(self):
+        super().initial()
+
+    def test_del_expense(self):
+        """Test the del_expense() function"""
+
+        for cat in Category:
+            with self.subTest(cat = cat):
+                self.initial()
+
+                add_expense_core(cat, 'test', 2.0)
+                del_expense_core(cat, 'test')
+
+                self.assertNotIn('test', expenses[cat])
+                self.assertNotEqual(expenses[cat], 'test')
+
