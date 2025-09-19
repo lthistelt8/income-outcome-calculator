@@ -10,19 +10,17 @@ class TestExpense(u.TestCase):
     """Test business logic for expenses"""
 
     def initial(self):
-        self.expenses = {}
+        expenses.clear()
 
-class TestAddExpense(TestExpense):
-    def initial(self):
-        super().initial()
-
-    def test_add_expense(self):
-        """Test the add_expense() function"""
-
+    def run_on_categories(self, func):
+        """Handles iteration of each category per test"""
         for cat in Category:
             with self.subTest(cat = cat):
-                #subTest will run tests across all four categories
+                #each iteration is tested on its own
+                #failures are specific, and do not stop remaining tests
                 self.initial()
+                func(cat)
+                #each function is passed with category parameters
 
                 add_expense_core(cat, 'test', 2.0)
 
