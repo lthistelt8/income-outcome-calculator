@@ -22,13 +22,15 @@ def show_grouped_expenses():
 
 
 def add_expense():
-    category, expense_name, expense_amount = get_expense_detail()
-    # values assigned to function can immediately be called
-    if get_expense_detail() is None:
-        debug_menu()
+    details = get_expense_detail
+
+    if details is None:
+        return None
+
+    category, expense_name, expense_amount = details
 
     add_expense_core(category, expense_name, expense_amount)
-    #aforementioned values are used to execute this function call
+    return None
 
 def add_expense_core(category, expense_name, expense_amount):
     """Handles the actual mutation of expenses dictionary"""
