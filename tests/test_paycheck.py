@@ -22,11 +22,18 @@ class TestExpense(u.TestCase):
                 func(cat)
                 #each function is passed with category parameters
 
-                add_expense_core(cat, 'test', 2.0)
+class TestAddExpense(TestExpense):
+    def assert_add(self, cat):
+        add_expense_core(cat, 'test', 2.0)
 
-                self.assertIn(cat, expenses)
-                self.assertIn('test', expenses[cat])
-                self.assertEqual(expenses[cat]['test'], 2.0)
+        self.assertIn(cat, expenses)
+        self.assertIn('test', expenses[cat])
+        self.assertEqual(expenses[cat]['test'], 2.0)
+
+    def test_add_expense(self):
+        """Test the add_expense() function"""
+
+        self.run_on_categories(self.assert_add)
 
 class TestUpdateExpense(TestExpense):
     def initial(self):
