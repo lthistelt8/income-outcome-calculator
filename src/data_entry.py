@@ -1,13 +1,6 @@
 """Take user input to return as parameters to pass through business logic"""
+from src.expenses import Category
 
-from enum import StrEnum
-
-class Category(StrEnum):
-    """A list of enumerated categories for expenses"""
-    AUTOMATIC = "Automatic"
-    VARIABLE = "Variable"
-    CREDIT_CARD = "Credit Card"
-    ONE_TIME_EXPENSE = "One Time Expense"
 
 def get_expense_detail():
     """Collects and returns expense details.
@@ -69,3 +62,4 @@ def get_expense_detail():
         print(cat, expense_name, expense_amount) #debug text
 
         return cat, expense_name, expense_amount
+
