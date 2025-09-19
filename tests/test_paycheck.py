@@ -35,6 +35,26 @@ class TestAddExpense(TestExpense):
 
         self.run_on_categories(self.assert_add)
 
+    ##--INVALID CASES--
+
+    #Invalid Category
+    def assert_add_invalid_category(self, cat):
+        add_expense_core('', 'Test', 2.0)
+
+        self.assertNotIn(cat, expenses)
+
+    def test_add_invalid_category(self):
+        self.run_on_categories(self.assert_add_invalid_category)
+
+    #Invalid Value
+    def assert_add_invalid_value(self, cat):
+        self.assertRaises(TypeError, add_expense_core(cat, 'Empty', 'test'))
+
+    def test_add_invalid_value(self):
+        self.run_on_categories(self.assert_add_invalid_value)
+
+
+
 class TestUpdateExpense(TestExpense):
     def initial(self):
         super().initial()

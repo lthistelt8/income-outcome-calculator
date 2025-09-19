@@ -43,7 +43,7 @@ def get_expense_detail():
             if expense_amount == 0:
                 print("Cancelled expense.")
                 return None
-        except ValueError:
+        except TypeError:
             print("Please enter a numerical value.")
             continue
         break
