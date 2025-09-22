@@ -95,6 +95,16 @@ class TestUpdateExpense(TestExpense):
     def test_update_expense_name_only(self):
         self.run_on_categories(self.assert_update_expense_name_only)
 
+    ##--INVALID CASES--
+    def assert_update_invalid_cat(self, cat):
+        add_expense_core('', 'test', 2.0)
+        update_expense_core('', 'test', 'pytest', 2.0)
+
+        self.assertNotIn(cat, expenses)
+
+    def test_update_invalid_cat(self):
+        self.run_on_categories(self.assert_update_invalid_cat)
+
 class TestDeleteExpense(TestExpense):
     def initial(self):
         super().initial()
