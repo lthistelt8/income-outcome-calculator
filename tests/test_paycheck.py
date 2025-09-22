@@ -105,6 +105,14 @@ class TestUpdateExpense(TestExpense):
     def test_update_invalid_cat(self):
         self.run_on_categories(self.assert_update_invalid_cat)
 
+    def assert_update_invalid_value(self, cat):
+        add_expense_core(cat, 'test', 2.0)
+
+        self.assertRaises(TypeError, update_expense_core(cat, 'test', 'pytest', 'two'))
+
+    def test_update_invalid_value(self):
+        self.run_on_categories(self.assert_update_invalid_value)
+
 class TestDeleteExpense(TestExpense):
     def initial(self):
         super().initial()
