@@ -35,6 +35,23 @@ def get_expense_detail():
         print("Cancelled expense.")
         return None
 
+    if expense_name in expenses:
+        print(
+            f"'{expense_name}' already exists. Would you like to update '{expense_name}' instead? (y/n)")
+        while True:
+            update = str(input("> "))
+
+            if update not in ('y', 'n'):
+                print("Invalid input. Please enter 'y' or 'n'.")
+                continue
+            if update == 'n':
+                print(f"Note: there will be duplicate entries of {expense_name}.")
+                break
+
+            edit_expense()
+            break
+
+
     while True:
         print("Enter expense amount.")
 
