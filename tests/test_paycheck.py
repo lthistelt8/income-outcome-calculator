@@ -95,6 +95,17 @@ class TestUpdateExpense(TestExpense):
     def test_update_expense_name_only(self):
         self.run_on_categories(self.assert_update_expense_name_only)
 
+    def assert_update_no_change(self, cat):
+        first_expense = add_expense_core(cat, 'test', 2.0)
+        second_expense = update_expense_core(cat, 'test', 'test', 2.0)
+
+        self.assertEqual(first_expense, second_expense)
+        self.assertNotIn(first_expense, expenses[cat])
+        self.assertIn('test', expenses[cat])
+
+    def test_update_no_change(self):
+        self.run_on_categories(self.assert_update_no_change)
+
     ##--INVALID CASES--
     def assert_update_invalid_cat(self, cat):
         add_expense_core('', 'test', 2.0)
