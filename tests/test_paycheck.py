@@ -125,19 +125,12 @@ class TestUpdateExpense(TestExpense):
         self.run_on_categories(self.assert_update_invalid_value)
 
 class TestDeleteExpense(TestExpense):
-    def initial(self):
-        super().initial()
+    def assert_del_expense(self, cat):
+        add_expense_core(cat, 'test',2.0)
+        self.assertIn('test', expenses[cat])
+
+        del_expense_core(cat, 'test')
+        self.assertNotIn('test', expenses[cat])
 
     def test_del_expense(self):
-        """Test the del_expense() function"""
-
-        for cat in Category:
-            with self.subTest(cat = cat):
-                self.initial()
-
-                add_expense_core(cat, 'test', 2.0)
-                del_expense_core(cat, 'test')
-
-                self.assertNotIn('test', expenses[cat])
-                self.assertNotEqual(expenses[cat], 'test')
-
+        self.run_on_categories(self.assert_del_expense)
