@@ -77,8 +77,6 @@ class TestAddExpense(TestExpense):
     def test_add_invalid_value(self):
         self.run_on_categories(self.assert_add_invalid_value)
 
-
-
 class TestUpdateExpense(TestExpense):
     def initial(self):
         super().initial()
