@@ -78,32 +78,22 @@ class TestAddExpense(TestExpense):
         self.run_on_categories(self.assert_add_invalid_value)
 
 class TestUpdateExpense(TestExpense):
-    def initial(self):
-        super().initial()
+    def assert_update_expense_name_only(self, cat):
+        add_expense_core(cat, 'test', 2.0)
+        #will run same test with all four categories
+        update_expense_core(cat, 'test', 'pytest', 2.0)
+
+        self.assertIn(cat, expenses)
+        #asserts that categories exist in expenses
+        self.assertIn('pytest', expenses[cat])
+        #asserts that 'pytest' appears in the categories
+        self.assertEqual(expenses[cat]['pytest'], 2.0)
+        #asserts that the value of 'pytest' in the expenses' categories all equal 2.0
+        self.assertNotIn('test', expenses[cat])
+        #asserts that 'test' has been removed from the expense dictionary
 
     def test_update_expense_name_only(self):
-        """Test edit_expense() function when only the name is changed"""
-
-        for cat in Category:
-            with self.subTest(cat = cat):
-                self.initial()
-
-                add_expense_core(cat, 'test', 2.0)
-                #will run same test with all four categories
-
-                update_expense_core(cat, 'test', 'pytest', 2.0)
-
-                self.assertIn(cat, expenses)
-                #asserts that categories exist in expenses
-
-                self.assertIn('pytest', expenses[cat])
-                #asserts that 'pytest' appears in the categories
-
-                self.assertEqual(expenses[cat]['pytest'], 2.0)
-                #asserts that the value of 'pytest' in the expenses' categories all equal 2.0
-
-                self.assertNotIn('test', expenses[cat])
-                #asserts that 'test' has been removed from the expense dictionary
+        self.run_on_categories(self.assert_update_expense_name_only)
 
 class TestDeleteExpense(TestExpense):
     def initial(self):
