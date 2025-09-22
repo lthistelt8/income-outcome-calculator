@@ -143,3 +143,13 @@ class TestDeleteExpense(TestExpense):
 
     def test_del_expense_invalid_didx(self):
         self.run_on_categories(self.assert_del_expense_invalid_didx)
+
+#--GRACEFUL CXL
+    def assert_del_expense_graceful_cxl(self, cat):
+        add_expense_core(cat, 'test', 2.0)
+
+        cxl = del_expense_core(0, 'cancel')
+        self.assertIsNone(cxl)
+
+    def test_del_expense_graceful_cxl(self):
+        self.run_on_categories(self.assert_del_expense_graceful_cxl)
