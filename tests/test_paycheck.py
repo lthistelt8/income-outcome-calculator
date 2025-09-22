@@ -134,3 +134,12 @@ class TestDeleteExpense(TestExpense):
 
     def test_del_expense(self):
         self.run_on_categories(self.assert_del_expense)
+
+#--INVALID DIDX--
+    def assert_del_expense_invalid_didx(self, cat):
+        add_expense_core(cat, 'test', 2.0)
+        self.assertIn('test', expenses[cat])
+        self.assertNotIn('n', expenses[cat], "'n' does not exist.")
+
+    def test_del_expense_invalid_didx(self):
+        self.run_on_categories(self.assert_del_expense_invalid_didx)
