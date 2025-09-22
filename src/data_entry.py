@@ -30,10 +30,27 @@ def get_expense_detail():
     cat = list(Category)[cidx - 1]
 
     print("Enter the expense name.")
-    expense_name = str(input("> "))
+    expense_name = str(input("> ")).title()
     if expense_name == "0":
         print("Cancelled expense.")
         return None
+
+    if expense_name in expenses:
+        print(
+            f"'{expense_name}' already exists. Would you like to update '{expense_name}' instead? (y/n)")
+        while True:
+            update = str(input("> "))
+
+            if update not in ('y', 'n'):
+                print("Invalid input. Please enter 'y' or 'n'.")
+                continue
+            if update == 'n':
+                print(f"Note: there will be duplicate entries of {expense_name}.")
+                break
+
+            edit_expense()
+            break
+
 
     while True:
         print("Enter expense amount.")
@@ -158,7 +175,7 @@ def edit_expense():
         #specifying 'str' prevents KeyErrors down the line
         print("Enter new expense name, or Enter to keep the current name.")
 
-        new_exp_name = input("> ").strip()
+        new_exp_name = input("> ").strip().title()
         if new_exp_name == "":
             new_exp_name = name
             #name is still equivalent to the earlier referenced 'name'

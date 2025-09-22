@@ -18,7 +18,7 @@ def show_grouped_expenses():
         #debug text; displays the data type of the category within 'grouped_expenses'
         for (name, amount) in grouped_expenses[cat].items():
             #for each name:amount pair in each category of grouped expenses
-            print(f"{name} - ${amount:.2f}")
+            print(f"{name.title()} - ${amount:.2f}")
 
 
 def add_expense():

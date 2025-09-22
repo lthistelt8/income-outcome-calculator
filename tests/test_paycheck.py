@@ -35,6 +35,21 @@ class TestAddExpense(TestExpense):
 
         self.run_on_categories(self.assert_add)
 
+    ##--DUPLICATE EXPENSE
+    def assert_add_duplicate_name(self, cat):
+        first_expense = add_expense_core(cat, 'Test', 4)
+        second_expense = add_expense_core(cat, 'Test', 5)
+
+        self.assertEqual(first_expense, second_expense)
+
+    def test_add_duplicate_name(self):
+        """
+        Test add_expense() function in cases where the expense name matches.
+        """
+
+        self.run_on_categories(self.assert_add_duplicate_name)
+
+
     ##--CXL ADDING EXPENSE--
     def assert_add_graceful_exit(self, cat):
         cxl = add_expense_core(0,'Exit', 1 )
