@@ -173,3 +173,18 @@ class TestDeleteExpense(TestExpense):
 
     def test_del_expense_graceful_cxl_didx(self):
         self.run_on_categories(self.assert_del_expense_graceful_cxl_didx)
+
+#--CONFIRM 'n' PROMPT
+    def assert_del_expense_confirm_input_n(self, cat):
+        add_expense_core(cat, 'test', 2.0)
+        self.assertIn('test', expenses[cat])
+
+        cat_list = str(list(Category).index(cat) + 1)
+
+        with patch("builtins.input", side_effect=[cat_list, 0, 'n']) as m:
+            no_del = del_expense()
+            self.assertIsNone(no_del)
+            self.assertEqual(m.call_count, 2)
+
+    def test_del_expense_confirm_input_n(self):
+        self.run_on_categories(self.assert_del_expense_confirm_input_n)
