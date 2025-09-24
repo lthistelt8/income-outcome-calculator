@@ -41,8 +41,15 @@ def add_expense_core(category, expense_name, expense_amount):
 
 def pop_expense():
     """Helper function that facilitates calling and returning values"""
-    category, didx = del_expense()
-    del_expense_core(category, didx)
+    returned = del_expense()
+
+    if returned is None:
+        return None
+
+    category, name = returned
+
+    del_expense_core(category, name)
+    return None
 
 def del_expense_core(category, didx):
     """Deletes expense from dictionary"""
@@ -82,3 +89,5 @@ def debug_menu(): #placeholder for a proper menu, which will eventually be extra
     update_expense()
     print("\n**SHOW UPDATED EXPENSE**")
     show_grouped_expenses()
+    print("\n**DELETE EXPENSE**")
+    pop_expense()
