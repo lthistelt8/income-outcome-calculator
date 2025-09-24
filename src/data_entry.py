@@ -100,7 +100,7 @@ def del_expense():
             print(f"Selection out of range. Enter 1-{len(list(Category))}.")
             continue
 
-        selected_cidx = list(Category)[cidx - 1]
+        selected_cidx = list(Category)[cidx - 1] #type:ignore
         for e, (name, amount) in enumerate(expenses[selected_cidx].items(), 1):
             print(f"{e}. {name} - ${amount:.2f}")
 
@@ -114,11 +114,9 @@ def del_expense():
             print(f"Selection out of range. Please select 1-{len(expenses[selected_cidx])}.")
             continue
 
-        selected_didx = list(expenses[selected_cidx])[didx - 1]
+        name, amount = list(expenses[selected_cidx].items())[didx - 1]
 
-        for name, amount in selected_didx:
-            print(f"{name} - ${amount:.2f}")
-
+        print(f"{name} - ${amount:.2f}")
         while True:
             print(f"Confirm deletion of {name}? DELETION IS IRREVERSIBLE (y/n).")
 
@@ -129,8 +127,9 @@ def del_expense():
 
             if confirm == 'n':
                 print("Deletion cancelled.")
+                return None
 
-            return selected_cidx, selected_didx
+            return selected_cidx, name
 
 def edit_expense():
     """Edit expense details."""
