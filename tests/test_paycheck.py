@@ -157,5 +157,14 @@ class TestDeleteExpense(TestExpense):
     def test_del_expense_graceful_cxl_cat(self):
         self.run_on_categories(self.assert_del_expense_graceful_cxl_cat)
 
-    def test_del_expense_graceful_cxl(self):
-        self.run_on_categories(self.assert_del_expense_graceful_cxl)
+#-- GRACEFUL CXL EXPENSE
+    def assert_del_expense_graceful_cxl_eidx(self, cat):
+        add_expense_core(cat, 'test', 2.0)
+
+        with patch("builtins.input", side_effect=[1, 0]):
+            del_eidx = del_expense()
+            self.assertIn('test', expenses[cat])
+            self.assertEqual(del_eidx, None)
+
+    def test_del_expense_graceful_cxl_eidx(self):
+        self.run_on_categories(self.assert_del_expense_graceful_cxl_eidx)
