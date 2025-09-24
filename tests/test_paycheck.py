@@ -2,8 +2,10 @@
 Contains test functions for source code + business logic
 """
 import unittest as u
+from unittest.mock import Mock, patch
 from src.expenses import expenses, Category
-from src.main import add_expense_core, del_expense_core, update_expense_core, debug_menu
+from src.main import add_expense_core, pop_expense, del_expense_core, update_expense_core
+from src.data_entry import del_expense
 
 
 class TestExpense(u.TestCase):
@@ -126,7 +128,7 @@ class TestUpdateExpense(TestExpense):
 
 class TestDeleteExpense(TestExpense):
     def assert_del_expense(self, cat):
-        add_expense_core(cat, 'test',2.0)
+        add_expense_core(cat, 'test', 2.0)
         self.assertIn('test', expenses[cat])
 
         del_expense_core(cat, 'test')
@@ -144,12 +146,16 @@ class TestDeleteExpense(TestExpense):
     def test_del_expense_invalid_didx(self):
         self.run_on_categories(self.assert_del_expense_invalid_didx)
 
-#--GRACEFUL CXL
-    def assert_del_expense_graceful_cxl(self, cat):
+#--GRACEFUL CXL CATEGORY
+    def assert_del_expense_graceful_cxl_cat(self, cat):
         add_expense_core(cat, 'test', 2.0)
 
-        cxl = del_expense_core(0, 'cancel')
-        self.assertIsNone(cxl)
+        with patch("builtins.input", side_effect=[0]):
+            del_cidx = del_expense()
+            self.assertEqual(del_cidx, None)
+
+    def test_del_expense_graceful_cxl_cat(self):
+        self.run_on_categories(self.assert_del_expense_graceful_cxl_cat)
 
     def test_del_expense_graceful_cxl(self):
         self.run_on_categories(self.assert_del_expense_graceful_cxl)
