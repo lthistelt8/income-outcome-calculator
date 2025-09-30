@@ -5,7 +5,7 @@ import unittest as u
 from unittest.mock import Mock, patch
 from src.expenses import expenses, Category
 from src.main import add_expense_core, del_expense_core, update_expense_core
-from src.data_entry import del_expense
+from src.data_entry import del_expense, get_expense_detail
 
 
 class TestExpense(u.TestCase):
@@ -78,6 +78,29 @@ class TestAddExpense(TestExpense):
 
     def test_add_invalid_value(self):
         self.run_on_categories(self.assert_add_invalid_value)
+
+    #Invalid, then Valid
+    def assert_add_invalid_then_valid(self, cat):
+        #invalid add
+        with patch("builtins.input", side_effect=['1', 'no good', 'one dollar', '0']) as bad_add:
+            invalid_add = get_expense_detail()
+            self.assertIsNone(invalid_add)
+
+            self.assertEqual(bad_add.call_count, 4)
+
+        #valid add
+        cat_list = str(list(Category).index(cat) + 1)
+
+        with patch("builtins.input", side_effect=[cat_list, 'good', 1, 'y']) as good_add:
+            valid_add = get_expense_detail()
+            self.assertIsInstance(valid_add, tuple)
+
+            self.assertEqual(valid_add, (cat, 'Good', 1.0))
+
+            self.assertEqual(good_add.call_count, 4)
+
+    def test_add_invalid_then_valid(self):
+        self.run_on_categories(self.assert_add_invalid_then_valid)
 
 class TestUpdateExpense(TestExpense):
     def assert_update_expense_name_only(self, cat):
