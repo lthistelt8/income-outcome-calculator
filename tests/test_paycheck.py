@@ -3,9 +3,8 @@ Contains test functions for source code + business logic
 """
 import unittest as u
 from unittest.mock import Mock, patch
-from itertools import chain, repeat
 from src.expenses import expenses, Category
-from src.main import add_expense_core, pop_expense, del_expense_core, update_expense_core
+from src.main import add_expense_core, del_expense_core, update_expense_core
 from src.data_entry import del_expense
 
 
@@ -188,3 +187,29 @@ class TestDeleteExpense(TestExpense):
 
     def test_del_expense_confirm_input_n(self):
         self.run_on_categories(self.assert_del_expense_confirm_input_n)
+
+#--FAIL, THEN PASS
+    def assert_del_expense_fail_pass(self, cat):
+        add_expense_core(cat, 'test', 2.0)
+        self.assertIn('test', expenses[cat])
+
+        #fail phase
+        with patch("builtins.input", side_effect=['auto', '0']) as m_invalid:
+            invalid_del = del_expense()
+            self.assertIsNone(invalid_del)
+
+            self.assertEqual(m_invalid.call_count, 2)
+
+        #success phase
+        cat_list = str(list(Category).index(cat) + 1)
+
+        with patch("builtins.input", side_effect=[cat_list, '1', 'y']) as m_valid:
+            valid_del = del_expense()
+
+            self.assertIsInstance(valid_del, tuple)
+            self.assertEqual(valid_del, (cat, "test"))
+
+            self.assertEqual(m_valid.call_count, 3)
+
+    def test_del_expense_fail_pass(self):
+        self.run_on_categories(self.assert_del_expense_fail_pass)
