@@ -193,12 +193,13 @@ class TestDeleteExpense(TestExpense):
         add_expense_core(cat, 'test', 2.0)
         self.assertIn('test', expenses[cat])
 
-        #fail phase
+        #fail phase - invalid cidx, then cxl input
         with patch("builtins.input", side_effect=['auto', '0']) as m_invalid:
             invalid_del = del_expense()
             self.assertIsNone(invalid_del)
 
             self.assertEqual(m_invalid.call_count, 2)
+            #call counts refer to how many values are passed
 
         #success phase
         cat_list = str(list(Category).index(cat) + 1)
@@ -207,7 +208,10 @@ class TestDeleteExpense(TestExpense):
             valid_del = del_expense()
 
             self.assertIsInstance(valid_del, tuple)
+            #asserts that instances in valid_del are a tuple (cat_list, '1', 'y')
+
             self.assertEqual(valid_del, (cat, "test"))
+            #asserts that 'valid_del' instance is equivalent to tuple (cat, 'test')
 
             self.assertEqual(m_valid.call_count, 3)
 
