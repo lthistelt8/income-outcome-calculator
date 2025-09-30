@@ -91,7 +91,12 @@ def del_expense():
 
     print("Enter the corresponding category number, or 0 to cancel at any time.")
     while True:
-        cidx = int(input("> "))
+        try:
+            cidx = int(input("> "))
+        except ValueError:
+            print("Invalid input. Enter the corresponding category number.")
+            continue
+
         if cidx == 0:
             print("Deletion cancelled.")
             return None
@@ -105,7 +110,12 @@ def del_expense():
             print(f"{e}. {name} - ${amount:.2f}")
 
         print("Enter the corresponding expense number.")
-        didx = int(input("> "))
+        try:
+            didx = int(input("> "))
+        except ValueError:
+            print("Invalid input. Enter the corresponding expense number.")
+            continue
+
         if didx == 0:
             print("Deletion cancelled.")
             return None
