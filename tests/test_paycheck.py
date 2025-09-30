@@ -169,8 +169,6 @@ class TestUpdateExpense(TestExpense):
     def test_update_invalid_then_valid(self):
         self.run_on_categories(self.assert_update_invalid_then_valid)
 
-
-
 class TestDeleteExpense(TestExpense):
     def assert_del_expense(self, cat):
         add_expense_core(cat, 'test', 2.0)
