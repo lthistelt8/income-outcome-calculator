@@ -7,7 +7,7 @@ from src.expenses import expenses, Category
 from src.main import add_expense_core, del_expense_core, update_expense_core
 from src.data_entry import del_expense, get_expense_detail, edit_expense
 
-
+#TEST UNIT CASES
 class TestExpense(u.TestCase):
     """Test business logic for expenses"""
 
@@ -260,3 +260,21 @@ class TestDeleteExpense(TestExpense):
 
     def test_del_expense_fail_pass(self):
         self.run_on_categories(self.assert_del_expense_fail_pass)
+
+#TEST FULL INTEGRATION
+
+class TestAddIntegration(TestExpense):
+    def assert_successful_add_once(self, cat):
+
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 'Pie', 3.14, 'y']) as expense_info:
+            exp = get_expense_detail()
+            self.assertIsInstance(exp, tuple)
+            self.assertEqual(expense_info.call_count, 4)
+
+            add_expense_core(*exp)
+            self.assertIn('Pie', expenses[cat])
+            self.assertEqual(expenses[cat]['Pie'], 3.14)
+
+    def test_successful_add_once(self):
+        self.run_on_categories(self.assert_successful_add_once)
