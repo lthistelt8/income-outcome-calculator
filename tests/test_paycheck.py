@@ -256,16 +256,16 @@ class TestAddIntegration(TestExpense):
     def test_successful_add_once(self):
         self.run_on_categories(self.assert_successful_add_once)
 
-    #Invalid, then Valid
-    def assert_add_invalid_then_valid(self, cat):
-        #invalid add
+    #Invalid -> Valid Amount
+    def assert_add_invalid_valid_exp_amount(self, cat):
+        #invalid amount
         with patch("builtins.input", side_effect=['1', 'no good', 'one dollar', '0']) as bad_add:
             invalid_add = get_expense_detail()
             self.assertIsNone(invalid_add)
 
             self.assertEqual(bad_add.call_count, 4)
 
-        #valid add
+        #valid amount
         cat_list = str(list(Category).index(cat) + 1)
 
         with patch("builtins.input", side_effect=[cat_list, 'good', 1, 'y']) as good_add:
@@ -276,5 +276,5 @@ class TestAddIntegration(TestExpense):
 
             self.assertEqual(good_add.call_count, 4)
 
-    def test_add_invalid_then_valid(self):
-        self.run_on_categories(self.assert_add_invalid_then_valid)
+    def test_add_invalid_valid_amount(self):
+        self.run_on_categories(self.assert_add_invalid_valid_exp_amount)
