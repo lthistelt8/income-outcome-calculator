@@ -79,29 +79,6 @@ class TestAddExpense(TestExpense):
     def test_add_invalid_value(self):
         self.run_on_categories(self.assert_add_invalid_value)
 
-    #Invalid, then Valid
-    def assert_add_invalid_then_valid(self, cat):
-        #invalid add
-        with patch("builtins.input", side_effect=['1', 'no good', 'one dollar', '0']) as bad_add:
-            invalid_add = get_expense_detail()
-            self.assertIsNone(invalid_add)
-
-            self.assertEqual(bad_add.call_count, 4)
-
-        #valid add
-        cat_list = str(list(Category).index(cat) + 1)
-
-        with patch("builtins.input", side_effect=[cat_list, 'good', 1, 'y']) as good_add:
-            valid_add = get_expense_detail()
-            self.assertIsInstance(valid_add, tuple)
-
-            self.assertEqual(valid_add, (cat, 'Good', 1.0))
-
-            self.assertEqual(good_add.call_count, 4)
-
-    def test_add_invalid_then_valid(self):
-        self.run_on_categories(self.assert_add_invalid_then_valid)
-
 class TestUpdateExpense(TestExpense):
     def assert_update_expense_name_only(self, cat):
         add_expense_core(cat, 'test', 2.0)
@@ -279,12 +256,25 @@ class TestAddIntegration(TestExpense):
     def test_successful_add_once(self):
         self.run_on_categories(self.assert_successful_add_once)
 
-    def assert_invalid_cat_cxl(self, cat):
-        cat_list = str(list(Category).index(cat) + 1)
-        with patch("builtins.input", side_effect=['Automatic', 'Auto', 0]) as invalid_cat:
-            exp = get_expense_detail()
-            self.assertIsNone(exp)
-            self.assertEqual(invalid_cat.call_count, 3)
+    #Invalid, then Valid
+    def assert_add_invalid_then_valid(self, cat):
+        #invalid add
+        with patch("builtins.input", side_effect=['1', 'no good', 'one dollar', '0']) as bad_add:
+            invalid_add = get_expense_detail()
+            self.assertIsNone(invalid_add)
 
-    def test_invalid_cat_cxl(self):
-        self.run_on_categories(self.assert_invalid_cat_cxl)
+            self.assertEqual(bad_add.call_count, 4)
+
+        #valid add
+        cat_list = str(list(Category).index(cat) + 1)
+
+        with patch("builtins.input", side_effect=[cat_list, 'good', 1, 'y']) as good_add:
+            valid_add = get_expense_detail()
+            self.assertIsInstance(valid_add, tuple)
+
+            self.assertEqual(valid_add, (cat, 'Good', 1.0))
+
+            self.assertEqual(good_add.call_count, 4)
+
+    def test_add_invalid_then_valid(self):
+        self.run_on_categories(self.assert_add_invalid_then_valid)
