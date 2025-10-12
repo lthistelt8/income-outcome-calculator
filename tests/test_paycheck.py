@@ -278,3 +278,13 @@ class TestAddIntegration(TestExpense):
 
     def test_successful_add_once(self):
         self.run_on_categories(self.assert_successful_add_once)
+
+    def assert_failed_cat_cxl(self, cat):
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=['Automatic', 'Auto', 0]) as invalid_cat:
+            exp = get_expense_detail()
+            self.assertIsNone(exp)
+            self.assertEqual(invalid_cat.call_count, 3)
+
+    def test_failed_exp_cxl(self):
+        self.run_on_categories(self.assert_failed_cat_cxl)
