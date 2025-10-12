@@ -278,3 +278,23 @@ class TestAddIntegration(TestExpense):
 
     def test_add_invalid_valid_amount(self):
         self.run_on_categories(self.assert_add_invalid_valid_exp_amount)
+
+    #Invalid -> Valid Category
+    def assert_add_invalid_valid_exp_category(self, cat):
+
+        #invalid cat
+        with patch("builtins.input", side_effect=['Auto', 'Automatic', 0]) as invalid_cat:
+            bad_cat = get_expense_detail()
+            self.assertIsNone(bad_cat)
+            self.assertEqual(invalid_cat.call_count, 3)
+
+        #valid cat
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 'good add', 3.21, 'y']) as valid_cat:
+            good_cat = get_expense_detail()
+            self.assertIsInstance(good_cat, tuple)
+            self.assertEqual(good_cat, (cat, 'Good Add', 3.21))
+            self.assertEqual(valid_cat.call_count, 4)
+
+    def test_add_invalid_valid_cat_category(self):
+        self.run_on_categories(self.assert_add_invalid_valid_exp_category)
