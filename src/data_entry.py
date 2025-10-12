@@ -16,7 +16,12 @@ def get_expense_detail():
     print("Enter the category number for this expense (or 0 to cancel at any point).")
 
     while True:
-        cidx = int(input("> "))
+        try:
+            cidx = int(input("> "))
+        except ValueError:
+            print("Invalid input. Please enter the corresponding number.")
+            continue
+
         if cidx == 0:
             print("Cancelled expense.")
             return None
