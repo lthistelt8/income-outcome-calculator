@@ -298,3 +298,22 @@ class TestAddIntegration(TestExpense):
 
     def test_add_invalid_valid_cat_category(self):
         self.run_on_categories(self.assert_add_invalid_valid_exp_category)
+
+class TestUpdateIntegration(TestExpense):
+    def assert_successful_update_once(self, cat):
+
+        cat_list = str(list(Category).index(cat) + 1)
+        add_expense_core(cat_list, "new expense", 2)
+
+        with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", "", "y"]) as updated_expense:
+            edit_exp = edit_expense()
+            self.assertIsInstance(edit_exp, tuple)
+            self.assertEqual(edit_exp, ("Updated Expense", 2))
+
+            update_expense_core(*edit_exp)
+            self.assertIn("Updated Expense", expenses[cat])
+            self.assertNotIn("New Expense", expenses[cat])
+            self.assertEqual(updated_expense.call_count, 5)
+
+    def test_successful_update_once(self):
+        self.run_on_categories(self.assert_successful_update_once)
