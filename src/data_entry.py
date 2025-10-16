@@ -155,51 +155,65 @@ def edit_expense():
     for i, cat in enumerate(Category, 1):
         print(f"{i}. =={cat}==")
 
+    #CATEGORY SELECTION
     print("Enter the corresponding category number, or 0 to cancel at any time.")
     while True:
-        cidx = int(input("> "))
+        try:
+            cidx = int(input("> "))
+        except ValueError:
+            print("Invalid input. Enter the corresponding number, or 0 to cancel.")
+            continue
         if cidx == 0:
             print("Edit cancelled.")
             return None
 
-        if not 1 <= cidx <= len(list(Category)):
-            #for dict of dicts, iterating through a list is fine, as long as
-            #said list isn't then used to call a value
+        if not 1 <= cidx <= len(Category):
             print(f"Selection out of range. Please select 1-{len(Category)}.")
             continue
 
         selected_cidx = list(Category)[cidx - 1]
-        for e, (name, amount) in enumerate(expenses[selected_cidx].items(), 1):
-            print(f"{e}. {name} - ${amount:.2f}")
 
+        #EXP SELECTION
+        exp = list(expenses[selected_cidx].items())
+        if not exp:
+            print(f"No expenses in {selected_cidx}.")
+            return None
+
+        for e, (exp_name, exp_amount) in enumerate(exp, 1):
+            print(f"{e}. {exp_name} - ${exp_amount:.2f}")
 
         print("Enter the corresponding expense number.")
-        eidx = int(input("> "))
+        try:
+            eidx = int(input("> "))
+        except ValueError:
+            print("Invalid input. Enter the corresponding number, or 0 to cancel.")
         if eidx == 0:
             print("Edit cancelled.")
             return None
 
-        if not 1 <= eidx <= len(list(expenses[selected_cidx])):
+        if not 1 <= eidx <= len(exp):
             print(f"Selection out of range. Please select 1-{len(expenses[selected_cidx])}.")
             continue
 
-        selected_eidx = list(expenses[selected_cidx])[eidx - 1]
+        current_name, current_amount = exp[eidx - 1]
 
-        print(f"\nNow editing {str(selected_eidx)}.")
-        #specifying 'str' prevents KeyErrors down the line
+        print(f"\nNow editing {current_name}.")
+
+        #NEW EXPENSE NAME
         print("Enter new expense name, or Enter to keep the current name.")
 
         new_exp_name = input("> ").strip().title()
         if new_exp_name == "":
-            new_exp_name = name
+            new_exp_name = current_name
             #name is still equivalent to the earlier referenced 'name'
 
+        #NEW EXPENSE AMOUNT
         while True:
             print("Enter new expense amount, or Enter to keep the current value.")
             new_exp_amount = (input("> ").strip())
 
             if new_exp_amount == "": #check for "Enter" input before validating float type
-                new_exp_amount = float(amount)
+                new_exp_amount = float(current_amount)
                 break
 
             try:
@@ -208,9 +222,9 @@ def edit_expense():
                 break
             except ValueError:
                 print("Please enter a numerical value.")
+                continue
 
-            break
-
+        #VERIFY UPDATED EXPENSE
         print(
             f"{new_exp_name} - ${new_exp_amount:.2f} in {selected_cidx}? (y/n)"
         )
@@ -227,6 +241,7 @@ def edit_expense():
                 print("Returning to main menu...")
                 break
 
-            print(selected_cidx, selected_eidx, new_exp_name, new_exp_amount)
+            print(selected_cidx, current_name, new_exp_name, new_exp_amount)
             #debug text; displays the values that are to be returned for use in 'update_expense'
-            return selected_cidx, selected_eidx, new_exp_name, new_exp_amount
+
+            return selected_cidx, current_name, new_exp_name, new_exp_amount
