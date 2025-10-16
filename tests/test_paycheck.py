@@ -303,12 +303,12 @@ class TestUpdateIntegration(TestExpense):
     def assert_successful_update_once(self, cat):
 
         cat_list = str(list(Category).index(cat) + 1)
-        add_expense_core(cat_list, "new expense", 2)
+        add_expense_core(cat, "new expense", 2)
 
         with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", "", "y"]) as updated_expense:
             edit_exp = edit_expense()
             self.assertIsInstance(edit_exp, tuple)
-            self.assertEqual(edit_exp, ("Updated Expense", 2))
+            self.assertEqual(edit_exp, (cat, "new expense", "Updated Expense", 2.0))
 
             update_expense_core(*edit_exp)
             self.assertIn("Updated Expense", expenses[cat])
