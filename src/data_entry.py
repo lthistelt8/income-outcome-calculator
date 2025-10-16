@@ -174,7 +174,10 @@ def edit_expense():
         selected_cidx = list(Category)[cidx - 1]
 
         #EXP SELECTION
-        exp = list(expenses[selected_cidx].items())
+        exp = list(expenses.get(selected_cidx, {}).items())
+        #fetches dict for selected category, returns name/amount pair
+        #then turns it into an index
+
         if not exp:
             print(f"No expenses in {selected_cidx}.")
             return None
