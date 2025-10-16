@@ -136,12 +136,14 @@ class TestUpdateExpense(TestExpense):
 
             self.assertEqual(bad_update.call_count, 3)
 
-        with patch("builtins.input", side_effect=[1, 'new expense', 5]) as good_update:
+        #valid update
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 1, 'new expense', 5, 'y']) as good_update:
             valid_update = edit_expense()
             self.assertIsInstance(valid_update, tuple)
-            self.assertEqual(valid_update, ('new expense', 5.0))
+            self.assertEqual(valid_update, (cat, 'old expense', 'New Expense', 5.0))
 
-            self.assertEqual(good_update.call_count, 3)
+            self.assertEqual(good_update.call_count, 5)
 
     def test_update_invalid_then_valid(self):
         self.run_on_categories(self.assert_update_invalid_then_valid)
