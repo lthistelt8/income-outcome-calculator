@@ -186,17 +186,21 @@ def edit_expense():
             print(f"{e}. {exp_name} - ${exp_amount:.2f}")
 
         print("Enter the corresponding expense number.")
-        try:
-            eidx = int(input("> "))
-        except ValueError:
-            print("Invalid input. Enter the corresponding number, or 0 to cancel.")
-        if eidx == 0:
-            print("Edit cancelled.")
-            return None
+        while True:
+            try:
+                eidx = int(input("> "))
+            except ValueError:
+                print("Invalid input. Enter the corresponding number, or 0 to cancel.")
+                continue
 
-        if not 1 <= eidx <= len(exp):
-            print(f"Selection out of range. Please select 1-{len(expenses[selected_cidx])}.")
-            continue
+            if eidx == 0:
+                print("Edit cancelled.")
+                return None
+
+            if not 1 <= eidx <= len(exp):
+                print(f"Selection out of range. Please select 1-{len(exp)}.")
+                continue
+            break
 
         current_name, current_amount = exp[eidx - 1]
 
@@ -213,7 +217,7 @@ def edit_expense():
         #NEW EXPENSE AMOUNT
         while True:
             print("Enter new expense amount, or Enter to keep the current value.")
-            new_exp_amount = (input("> ").strip())
+            new_exp_amount = input("> ")
 
             if new_exp_amount == "": #check for "Enter" input before validating float type
                 new_exp_amount = float(current_amount)
@@ -222,10 +226,10 @@ def edit_expense():
             try:
                 new_exp_amount = float(new_exp_amount)
                 #the new expense amount is validated as a float before being allowed to pass
-                break
             except ValueError:
                 print("Please enter a numerical value.")
                 continue
+            break
 
         #VERIFY UPDATED EXPENSE
         print(
