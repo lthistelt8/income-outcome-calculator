@@ -371,3 +371,18 @@ class TestDeleteIntegration(TestExpense):
 
     def test_del_invalid_valid_exp(self):
         self.run_on_categories(self.assert_del_invalid_valid_exp)
+
+    #CXL Expense
+    def assert_del_exp_cxl(self, cat):
+        add_expense_core(cat, 'old expense', 1.0)
+
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 1, 'n']) as cxl_expense:
+            cxl_exp = del_expense()
+            self.assertIsNone(cxl_exp)
+
+            self.assertIn('old expense', expenses[cat])
+            self.assertEqual(cxl_expense.call_count, 3)
+
+    def test_del_exp_cxl(self):
+        self.run_on_categories(self.assert_del_exp_cxl)
