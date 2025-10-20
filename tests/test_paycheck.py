@@ -360,7 +360,7 @@ class TestDeleteIntegration(TestExpense):
         add_expense_core(cat, 'old expense', 1.0)
 
         cat_list = str(list(Category).index(cat) + 1)
-        with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'yah' 'y']) as invalid_valid_delete:
+        with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'nah', 'y']) as invalid_valid_delete:
             invalid_valid_exp = del_expense()
             self.assertIsInstance(invalid_valid_exp, tuple)
             self.assertEqual(invalid_valid_exp, (cat, 'old expense'))
