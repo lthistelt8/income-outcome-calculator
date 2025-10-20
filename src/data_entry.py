@@ -115,19 +115,21 @@ def del_expense():
             print(f"{e}. {name} - ${amount:.2f}")
 
         print("Enter the corresponding expense number.")
-        try:
-            didx = int(input("> "))
-        except ValueError:
-            print("Invalid input. Enter the corresponding expense number.")
-            continue
+        while True:
+            try:
+                didx = int(input("> "))
+            except ValueError:
+                print("Invalid input. Enter the corresponding expense number.")
+                continue
 
-        if didx == 0:
-            print("Deletion cancelled.")
-            return None
+            if didx == 0:
+                print("Deletion cancelled.")
+                return None
 
-        if not 1 <= didx <= len(list(expenses[selected_cidx])):
-            print(f"Selection out of range. Please select 1-{len(expenses[selected_cidx])}.")
-            continue
+            if not 1 <= didx <= len(list(expenses[selected_cidx])):
+                print(f"Selection out of range. Please select 1-{len(expenses[selected_cidx])}.")
+                continue
+            break
 
         name, amount = list(expenses[selected_cidx].items())[didx - 1]
 
