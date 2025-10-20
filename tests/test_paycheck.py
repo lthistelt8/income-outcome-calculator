@@ -337,3 +337,20 @@ class TestUpdateIntegration(TestExpense):
 
     def test_update_invalid_valid_exp(self):
         self.run_on_categories(self.assert_update_invalid_valid_exp)
+
+class TestDeleteIntegration(TestExpense):
+    def assert_del_expense_successful_once(self, cat):
+        add_expense_core(cat, 'old expense', 1.0)
+
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 1, 'y']) as delete_expense:
+            del_exp = del_expense()
+            self.assertIsInstance(del_exp, tuple)
+            self.assertEqual(del_exp, (cat, 'old expense'))
+
+            del_expense_core(*del_exp)
+            self.assertNotIn('old expense', expenses[cat])
+            self.assertEqual(delete_expense.call_count, 3)
+
+    def test_del_expense_successful_once(self):
+        self.run_on_categories(self.assert_del_expense_successful_once)
