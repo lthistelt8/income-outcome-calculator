@@ -8,43 +8,52 @@ class TestAddExpense(TestExpense):
         cat_list = str(list(Category).index(cat) + 1)
         #represents the number; 'cat' represents the keyword
 
-        with patch("builtins.input", side_effect=[cat_list, 'first expense', 1.00, 'y']) as first_expense:
-            exp_one = get_expense_detail()
-            self.assertEqual(exp_one, (cat, 'First Expense', 1.00))
+        with patch("builtins.input", side_effect=[cat_list, 'first expense', 1.00, 'y']) as expense_detail:
+            exp_deet = get_expense_detail()
+            self.assertEqual(exp_deet, (cat, 'First Expense', 1.00))
 
-            self.assertEqual(first_expense.call_count, 4)
+            self.assertEqual(expense_detail.call_count, 4)
 
-    def test_add_expense(self):
+    def test_get_expense_detail(self):
         """Test the add_expense() function"""
 
         self.run_on_categories(self.assert_get_expense_detail)
 
-    ##--CXL ADDING EXPENSE--
-    def assert_add_graceful_exit(self, cat):
-        cxl = add_expense_core(0,'Exit', 1 )
+    ##--CXL EXP DETAIL AMOUNT--
+    def assert_get_expense_detail_cxl_amount(self, cat):
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 'frist expnse', 0]) as canceled_detail_amount:
+            cxl_exp_amount = get_expense_detail()
+            self.assertIsNone(cxl_exp_amount)
+            self.assertNotIn('frist expnse', expenses)
 
-        self.assertIsNone(cxl)
+            self.assertEqual(canceled_detail_amount.call_count, 3)
 
-    def test_add_graceful_exit(self):
-        self.run_on_categories(self.assert_add_graceful_exit)
+    def test_get_expense_detail_cxl_amount(self):
+        self.run_on_categories(self.assert_get_expense_detail_cxl_amount)
 
-    ##--INVALID CASES--
+    ##--CXL EXP DETAIL NAME--
+    def assert_get_expense_detail_cxl_name(self, cat):
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 0]) as canceled_detail_name:
+            cxl_exp_name = get_expense_detail()
+            self.assertIsNone(cxl_exp_name)
 
-    #Invalid Category
-    def assert_add_invalid_category(self, cat):
-        add_expense_core('', 'Test', 2.0)
+            self.assertEqual(canceled_detail_name.call_count, 2)
 
-        self.assertNotIn(cat, expenses)
+    def test_get_expense_detail_cxl_name(self):
+        self.run_on_categories(self.assert_get_expense_detail_cxl_name)
 
-    def test_add_invalid_category(self):
-        self.run_on_categories(self.assert_add_invalid_category)
+    #--CXL EXP DETAIL CAT
+    def assert_get_expense_detail_cxl_cat(self, cat):
+        with patch("builtins.input", side_effect=[0]) as canceled_detail_category:
+            cxl_cat = get_expense_detail()
+            self.assertIsNone(cxl_cat)
 
-    #Invalid Value
-    def assert_add_invalid_value(self, cat):
-        self.assertRaises(TypeError, add_expense_core(cat, 'Empty', 'test'))
+            self.assertEqual(canceled_detail_category.call_count, 1)
 
-    def test_add_invalid_value(self):
-        self.run_on_categories(self.assert_add_invalid_value)
+    def test_get_expense_detail_cxl_cat(self):
+        self.run_on_categories(self.assert_get_expense_detail_cxl_cat)
 
 class TestAddIntegration(TestExpense):
     def assert_successful_add_once(self, cat):
