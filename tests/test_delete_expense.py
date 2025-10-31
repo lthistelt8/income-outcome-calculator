@@ -1,4 +1,7 @@
 from tests.test_paycheck import TestExpense
+from unittest.mock import patch
+from src.main import pop_expense
+from src.data_entry import del_expense
 
 class TestDeleteExpense(TestExpense):
     def assert_del_expense(self, cat):

@@ -1,4 +1,7 @@
 from tests.test_paycheck import TestExpense
+from unittest.mock import patch
+from src.main import update_expense
+from src.data_entry import edit_expense
 
 class TestUpdateExpense(TestExpense):
     def assert_update_expense_name_only(self, cat):
