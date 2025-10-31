@@ -1,20 +1,23 @@
-from tests.test_paycheck import TestExpense
+from tests.test_paycheck import TestExpense, Category, expenses
 from unittest.mock import patch
 from src.main import add_expense
 from src.data_entry import get_expense_detail
 
 class TestAddExpense(TestExpense):
-    def assert_add(self, cat):
-        add_expense_core(cat, 'test', 2.0)
+    def assert_get_expense_detail(self, cat):
+        cat_list = str(list(Category).index(cat) + 1)
+        #represents the number; 'cat' represents the keyword
 
-        self.assertIn(cat, expenses)
-        self.assertIn('test', expenses[cat])
-        self.assertEqual(expenses[cat]['test'], 2.0)
+        with patch("builtins.input", side_effect=[cat_list, 'first expense', 1.00, 'y']) as first_expense:
+            exp_one = get_expense_detail()
+            self.assertEqual(exp_one, (cat, 'First Expense', 1.00))
+
+            self.assertEqual(first_expense.call_count, 4)
 
     def test_add_expense(self):
         """Test the add_expense() function"""
 
-        self.run_on_categories(self.assert_add)
+        self.run_on_categories(self.assert_get_expense_detail)
 
     ##--DUPLICATE EXPENSE
     def assert_add_duplicate_name(self, cat):
