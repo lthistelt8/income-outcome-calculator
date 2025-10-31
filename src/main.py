@@ -25,7 +25,7 @@ def add_expense():
     details = get_expense_detail()
 
     if details is None:
-        return debug_menu()
+        return None
 
     category, expense_name, expense_amount = details
 
@@ -75,19 +75,3 @@ def update_expense_core(category, former_expense, new_expense, new_amount):
     expenses[category].pop(former_expense, None)
     #deletes old expense
     expenses[category][new_expense] = new_amount
-
-
-
-def debug_menu(): #placeholder for a proper menu, which will eventually be extracted and fleshed out
-    #as its own module
-    """Manually run functions to verify user functionality."""
-    print("**ADD EXPENSE**")
-    add_expense()
-    print("\n**SHOW EXPENSES**")
-    show_grouped_expenses()
-    print("\n**UPDATE EXPENSE**")
-    update_expense()
-    print("\n**SHOW UPDATED EXPENSE**")
-    show_grouped_expenses()
-    print("\n**DELETE EXPENSE**")
-    pop_expense()
