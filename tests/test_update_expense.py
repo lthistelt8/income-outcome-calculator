@@ -32,38 +32,33 @@ class TestUpdateExpense(TestExpense):
         self.run_on_categories(self.assert_edit_no_change)
 
 class TestUpdateIntegration(TestExpense):
-    def assert_successful_update_once(self, cat):
+    def assert_successful_update(self, cat):
 
         cat_list = str(list(Category).index(cat) + 1)
-        add_expense_core(cat, "new expense", 2)
+        add_expense_core(cat, "un-updated expense", 2)
 
-        with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", "", "y"]) as updated_expense:
-            edit_exp = edit_expense()
-            self.assertIsInstance(edit_exp, tuple)
-            self.assertEqual(edit_exp, (cat, "new expense", "Updated Expense", 2.0))
+        with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", 20, "y"]) as updated_expense:
+            update_expense()
+            self.assertIn('Updated Expense', expenses[cat])
+            self.assertNotIn('Un-Updated Expense', expenses[cat])
+            self.assertEqual(expenses[cat]['Updated Expense'], 20.00)
 
-            update_expense_core(*edit_exp)
-            self.assertIn("Updated Expense", expenses[cat])
-            self.assertNotIn("New Expense", expenses[cat])
             self.assertEqual(updated_expense.call_count, 5)
 
     def test_successful_update_once(self):
-        self.run_on_categories(self.assert_successful_update_once)
+        self.run_on_categories(self.assert_successful_update)
 
     #Invalid -> Valid Update
     def assert_update_invalid_valid_exp(self, cat):
         cat_list = str(list(Category).index(cat) + 1)
         add_expense_core(cat, "new expense", 2)
 
-        with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'updated expense', 'three', 3, "y"]) as invalid_valid_expense:
-            invalid_valid_exp = edit_expense()
-            self.assertIsInstance(invalid_valid_exp, tuple)
-            self.assertEqual(invalid_valid_exp, (cat, 'new expense', 'Updated Expense', 3.0))
-
-            update_expense_core(*invalid_valid_exp)
+        with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'updated expense', 'three', 3, 'y']) as invalid_valid_update:
+            update_expense()
             self.assertIn('Updated Expense', expenses[cat])
-            self.assertNotIn('New Expense', expenses[cat])
-            self.assertEqual(invalid_valid_expense.call_count, 8)
+            self.assertEqual(expenses[cat]['Updated Expense'], 3.00)
+
+            self.assertEqual(invalid_valid_update.call_count, 8)
 
     def test_update_invalid_valid_exp(self):
         self.run_on_categories(self.assert_update_invalid_valid_exp)
