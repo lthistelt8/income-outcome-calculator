@@ -26,6 +26,8 @@ class TestDeleteIntegration(TestExpense):
             del_expense()
             self.assertNotIn('Old Expense', expenses[cat])
 
+            self.assertEqual(delete_expense_success.call_count, 3)
+
     def test_del_expense_successful(self):
         self.run_on_categories(self.assert_delete_expense_successful)
 
