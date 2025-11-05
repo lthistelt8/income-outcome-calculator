@@ -9,11 +9,11 @@ class TestUpdateExpense(TestExpense):
         #will run same test with all four categories
 
         cat_list = str(list(Category).index(cat) + 1)
-        with patch("builtins.input", side_effect=[cat_list, 1, 'pytest', '', 'y']) as updated_expense:
-            upd_exp = edit_expense()
-            self.assertEqual(upd_exp, (cat, 'test', 'Pytest', 2.0))
+        with patch("builtins.input", side_effect=[cat_list, 1, 'pytest', '', 'y']) as edited_expense:
+            edit_exp = edit_expense()
+            self.assertEqual(edit_exp, (cat, 'test', 'Pytest', 2.0))
 
-            self.assertEqual(updated_expense.call_count, 5)
+            self.assertEqual(edited_expense.call_count, 5)
 
     def test_update_expense_name_only(self):
         self.run_on_categories(self.assert_edit_expense_name)
