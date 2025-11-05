@@ -1,29 +1,22 @@
-from tests.test_paycheck import TestExpense
+from tests.test_paycheck import TestExpense, Category, expenses
 from unittest.mock import patch
-from src.main import update_expense
+from src.main import update_expense, add_expense_core
 from src.data_entry import edit_expense
 
 class TestUpdateExpense(TestExpense):
-    def assert_update_expense_name_only(self, cat):
+    def assert_edit_expense_name(self, cat):
         add_expense_core(cat, 'test', 2.0)
         #will run same test with all four categories
-        update_expense_core(cat, 'test', 'pytest', 2.0)
 
-        self.assertIn(cat, expenses)
-        #asserts that categories exist in expenses
-        self.assertIn('pytest', expenses[cat])
-        #asserts that 'pytest' appears in the categories
-        self.assertEqual(expenses[cat]['pytest'], 2.0)
-        #asserts that the value of 'pytest' in the expenses' categories all equal 2.0
-        self.assertNotIn('test', expenses[cat])
-        #asserts that 'test' has been removed from the expense dictionary
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 1, 'pytest', '', 'y']) as updated_expense:
+            upd_exp = edit_expense()
+            self.assertEqual(upd_exp, (cat, 'test', 'Pytest', 2.0))
+
+            self.assertEqual(updated_expense.call_count, 5)
 
     def test_update_expense_name_only(self):
-        self.run_on_categories(self.assert_update_expense_name_only)
-
-    def assert_update_no_change(self, cat):
-        first_expense = add_expense_core(cat, 'test', 2.0)
-        second_expense = update_expense_core(cat, 'test', 'test', 2.0)
+        self.run_on_categories(self.assert_edit_expense_name)
 
         self.assertEqual(first_expense, second_expense)
         self.assertNotIn(first_expense, expenses[cat])
