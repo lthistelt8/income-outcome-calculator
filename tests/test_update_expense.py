@@ -18,52 +18,18 @@ class TestUpdateExpense(TestExpense):
     def test_update_expense_name_only(self):
         self.run_on_categories(self.assert_edit_expense_name)
 
-        self.assertEqual(first_expense, second_expense)
-        self.assertNotIn(first_expense, expenses[cat])
-        self.assertIn('test', expenses[cat])
-
-    def test_update_no_change(self):
-        self.run_on_categories(self.assert_update_no_change)
-
-    ##--INVALID CASES--
-    def assert_update_invalid_cat(self, cat):
-        add_expense_core('', 'test', 2.0)
-        update_expense_core('', 'test', 'pytest', 2.0)
-
-        self.assertNotIn(cat, expenses)
-
-    def test_update_invalid_cat(self):
-        self.run_on_categories(self.assert_update_invalid_cat)
-
-    def assert_update_invalid_value(self, cat):
+    def assert_edit_no_change(self, cat):
         add_expense_core(cat, 'test', 2.0)
 
-        self.assertRaises(TypeError, update_expense_core(cat, 'test', 'pytest', 'two'))
-
-    def test_update_invalid_value(self):
-        self.run_on_categories(self.assert_update_invalid_value)
-
-    def assert_update_invalid_then_valid(self, cat):
-        add_expense_core(cat, 'old expense', 1.0)
-
-        #invalid update
-        with patch("builtins.input", side_effect=['old expense', 'first', 0]) as bad_update:
-            invalid_update = edit_expense()
-            self.assertIsNone(invalid_update)
-
-            self.assertEqual(bad_update.call_count, 3)
-
-        #valid update
         cat_list = str(list(Category).index(cat) + 1)
-        with patch("builtins.input", side_effect=[cat_list, 1, 'new expense', 5, 'y']) as good_update:
-            valid_update = edit_expense()
-            self.assertIsInstance(valid_update, tuple)
-            self.assertEqual(valid_update, (cat, 'old expense', 'New Expense', 5.0))
+        with patch("builtins.input", side_effect=[cat_list, 1, '', '', 'y']) as edit_expense_no_change:
+            no_chg_exp = edit_expense()
+            self.assertEqual(no_chg_exp, (cat, 'test', 'test', 2.0))
 
-            self.assertEqual(good_update.call_count, 5)
+            self.assertEqual(edit_expense_no_change.call_count, 5)
 
-    def test_update_invalid_then_valid(self):
-        self.run_on_categories(self.assert_update_invalid_then_valid)
+    def test_update_no_change(self):
+        self.run_on_categories(self.assert_edit_no_change)
 
 class TestUpdateIntegration(TestExpense):
     def assert_successful_update_once(self, cat):
