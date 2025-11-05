@@ -39,7 +39,7 @@ def add_expense_core(category, expense_name, expense_amount):
     # in the "category" dict, the "expense_name" is set to the "expense_amount"
 
 
-def pop_expense():
+def delete_expense():
     """Helper function that facilitates calling and returning values"""
     returned = del_expense()
 
