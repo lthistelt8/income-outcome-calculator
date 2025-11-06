@@ -1,7 +1,7 @@
 from tests.test_paycheck import TestExpense, Category, expenses
 from unittest.mock import patch
 from src.main import delete_expense, add_expense_core
-from src.data_entry import del_expense
+from src.data_entry.data_entry import del_expense
 
 class TestDeleteExpense(TestExpense):
     def assert_del_expense(self, cat):

@@ -2,7 +2,7 @@
 Business logic that the user will execute through an implemented main menu
 """
 
-from src.data_entry import get_expense_detail, del_expense, edit_expense
+from src.data_entry.data_entry import get_expense_detail, del_expense, edit_expense
 from src.expenses import expenses
 
 def group_expenses(expense_list):

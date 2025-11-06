@@ -1,7 +1,7 @@
 from tests.test_paycheck import TestExpense, Category, expenses
 from unittest.mock import patch
 from src.main import add_expense
-from src.data_entry import get_expense_detail
+from src.data_entry.data_entry import get_expense_detail
 
 class TestAddExpense(TestExpense):
     def assert_get_expense_detail(self, cat):
