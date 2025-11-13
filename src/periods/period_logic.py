@@ -7,12 +7,13 @@ from time import strftime
 from src.periods.period_config import BiweeklyExpense
 from src.expenses import expenses
 
-def validate_due_date(expense_date):
+def validate_due_date(exp_month, exp_day):
     """
     Validates a given expense date.
     """
     #may be added as its own code block rather than a function
-    if expense_date:
-        formatted_date = strftime('%d,%m')
+    if exp_month and exp_day:
+        formatted_date = strftime('%m,%d')
         return formatted_date
     return None
+
