@@ -1,6 +1,6 @@
 """Take user input to return as parameters to pass through business logic"""
 from src.expenses import expenses, Category
-from datetime import datetime, timedelta, time
+from datetime import datetime
 
 
 def get_expense_detail():
