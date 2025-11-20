@@ -5,7 +5,7 @@ from src.data_entry.data_entry import edit_expense
 
 class TestUpdateExpense(TestExpense):
     def assert_edit_expense_name(self, cat):
-        add_expense_core(cat, 'test', 2.0)
+        add_expense_core(cat, 'test', 2.0, due_date)
         #will run same test with all four categories
 
         cat_list = str(list(Category).index(cat) + 1)
@@ -19,7 +19,7 @@ class TestUpdateExpense(TestExpense):
         self.run_on_categories(self.assert_edit_expense_name)
 
     def assert_edit_no_change(self, cat):
-        add_expense_core(cat, 'test', 2.0)
+        add_expense_core(cat, 'test', 2.0, due_date)
 
         cat_list = str(list(Category).index(cat) + 1)
         with patch("builtins.input", side_effect=[cat_list, 1, '', '', 'y']) as edit_expense_no_change:
@@ -35,7 +35,7 @@ class TestUpdateIntegration(TestExpense):
     def assert_successful_update(self, cat):
 
         cat_list = str(list(Category).index(cat) + 1)
-        add_expense_core(cat, "un-updated expense", 2)
+        add_expense_core(cat, "un-updated expense", 2, due_date)
 
         with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", 20, "y"]) as updated_expense:
             update_expense()
@@ -51,7 +51,7 @@ class TestUpdateIntegration(TestExpense):
     #Invalid -> Valid Update
     def assert_update_invalid_valid_exp(self, cat):
         cat_list = str(list(Category).index(cat) + 1)
-        add_expense_core(cat, "new expense", 2)
+        add_expense_core(cat, "new expense", 2, due_date)
 
         with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'updated expense', 'three', 3, 'y']) as invalid_valid_update:
             update_expense()
