@@ -34,6 +34,7 @@ def get_expense_detail():
         break
 
     cat = list(Category)[cidx - 1]
+    expenses.setdefault(cat, {})
 
     #ENTER EXPENSE NAME
     print("Enter the expense name.")
@@ -74,14 +75,17 @@ def get_expense_detail():
 
     #ENTER & PARSE DUE DATE
     print(
-        "Enter expense due date in DD-MM format. For example, for November 20, enter '20-11")
+        "Enter expense due date in DD-MM format. Example: for November 20, enter '20-11'.")
 
     while True:
         try:
             due_date_str = input("\n> ")
+            if due_date_str == '0':
+                return None
+
             current_year = datetime.now().year
 
-            due_date_obj = datetime.strptime(f"{due_date_str} - {current_year}", "%d,%m,%Y")
+            due_date_obj = datetime.strptime(f"{due_date_str}-{current_year}", "%d-%m-%Y")
             due_date = due_date_obj.strftime("%d-%b")
 
         except ValueError:
