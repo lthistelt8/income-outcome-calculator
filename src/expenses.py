@@ -23,5 +23,6 @@ ExpensesDict = Dict[Category, Dict[str, ExpenseEntry]]
 #which is then a list containing a string value, and the values within ExpenseEntry
 #(which would be the expense amount and its due date)
 
-expenses: ExpensesDict = {}
-#the 'expenses' dictionary now follows a defined format
+expenses: ExpensesDict = {cat: {} for cat in Category}
+#the 'expenses' dictionary now follows a defined format,
+#and will always load all four categories
