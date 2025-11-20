@@ -9,6 +9,7 @@ class TestExpense(u.TestCase):
 
     def initial(self):
         expenses.clear()
+        expenses.update({cat: {} for cat in Category})
 
     def run_on_categories(self, func):
         """Handles iteration of each category per test"""
