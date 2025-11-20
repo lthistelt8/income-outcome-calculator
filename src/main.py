@@ -3,7 +3,7 @@ Business logic that the user will execute through an implemented main menu
 """
 
 from src.data_entry.data_entry import get_expense_detail, del_expense, edit_expense
-from src.expenses import expenses, datetime
+from src.expenses import expenses, datetime, Category
 
 def group_expenses(expense_list):
     if isinstance(expense_list, dict):
@@ -34,7 +34,6 @@ def add_expense():
 
 def add_expense_core(category: Category, expense_name: str, expense_amount: float, due_date: datetime):
     """Handles the actual mutation of expenses dictionary"""
-    expenses.setdefault(category, {})
     expenses[category][expense_name] = {
         'expense_amount': expense_amount,
         'due_date': due_date
