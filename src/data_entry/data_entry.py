@@ -34,7 +34,6 @@ def get_expense_detail():
         break
 
     cat = list(Category)[cidx - 1]
-    expenses.setdefault(cat, {})
 
     #ENTER EXPENSE NAME
     print("Enter the expense name.")
