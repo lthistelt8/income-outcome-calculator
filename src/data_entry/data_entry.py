@@ -102,7 +102,7 @@ def get_expense_detail():
         if confirm == 'n':
             get_expense_detail()
 
-        print(cat, expense_name, expense_amount) #debug text
+        print(cat, expense_name, expense_amount, due_date) #debug text
 
         return cat, expense_name, expense_amount, due_date
 
@@ -205,8 +205,8 @@ def edit_expense():
             print(f"No expenses in {selected_cidx}.")
             return None
 
-        for e, (exp_name, exp_amount) in enumerate(exp, 1):
-            print(f"{e}. {exp_name} - ${exp_amount:.2f}")
+        for e, (exp_name, exp_amount, current_due_date) in enumerate(exp, 1):
+            print(f"{e}. {exp_name} - ${exp_amount:.2f}, due {current_due_date}")
 
         print("Enter the corresponding expense number.")
         while True:
@@ -260,6 +260,27 @@ def edit_expense():
         )
         print("Update expense?")
 
+        #NEW DUE DATE
+        print("Enter new due date, or Enter to keep the existing date.")
+        while True:
+            try:
+                new_due_date_str = input("\n> ")
+                if new_due_date_str == "":
+                    new_due_date = current_due_date
+                    break
+
+                current_year = datetime.now().year
+
+                new_due_date_obj = datetime.strptime(f"{new_due_date_str} - {current_year}", "%d,%m,%Y")
+                new_due_date = new_due_date_obj.strftime("%d-%b")
+
+            except ValueError:
+                print("Invalid entry. Please enter in DD-MM format (ex.: November 20 is represented as 20-11).")
+                continue
+            break
+
+
+
         while True:
             confirm = str(input("> "))
             if confirm not in ('y', 'n'):
@@ -274,4 +295,4 @@ def edit_expense():
             print(selected_cidx, current_name, new_exp_name, new_exp_amount)
             #debug text; displays the values that are to be returned for use in 'update_expense'
 
-            return selected_cidx, current_name, new_exp_name, new_exp_amount
+            return selected_cidx, current_name, new_exp_name, new_exp_amount, new_due_date
