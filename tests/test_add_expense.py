@@ -8,11 +8,11 @@ class TestAddExpense(TestExpense):
         cat_list = str(list(Category).index(cat) + 1)
         #represents the number; 'cat' represents the keyword
 
-        with patch("builtins.input", side_effect=[cat_list, 'first expense', 1.00, 'y']) as expense_detail:
+        with patch("builtins.input", side_effect=[cat_list, 'first expense', 1.00, '20-11', 'y']) as expense_detail:
             exp_deet = get_expense_detail()
-            self.assertEqual(exp_deet, (cat, 'First Expense', 1.00))
+            self.assertEqual(exp_deet, (cat, 'First Expense', 1.00, '20-Nov'))
 
-            self.assertEqual(expense_detail.call_count, 4)
+            self.assertEqual(expense_detail.call_count, 5)
 
     def test_get_expense_detail(self):
         """Test the add_expense() function"""
@@ -59,12 +59,12 @@ class TestAddIntegration(TestExpense):
     def assert_successful_add_once(self, cat):
 
         cat_list = str(list(Category).index(cat) + 1)
-        with patch("builtins.input", side_effect=[cat_list, 'Pie', 3.14, 'y']) as expense_info:
+        with patch("builtins.input", side_effect=[cat_list, 'Pie', 3.14, '20-11', 'y']) as expense_info:
             add_expense()
             self.assertIn('Pie', expenses[cat])
-            self.assertEqual(expenses[cat]['Pie'], 3.14)
+            self.assertEqual(expenses[cat]['Pie'], {'expense_amount': 3.14, 'due_date': '20-Nov'})
 
-            self.assertEqual(expense_info.call_count, 4)
+            self.assertEqual(expense_info.call_count, 5)
 
     def test_successful_add_once(self):
         self.run_on_categories(self.assert_successful_add_once)
@@ -81,12 +81,12 @@ class TestAddIntegration(TestExpense):
         #valid amount
         cat_list = str(list(Category).index(cat) + 1)
 
-        with patch("builtins.input", side_effect=[cat_list, 'good', 1, 'y']) as good_add:
+        with patch("builtins.input", side_effect=[cat_list, 'good', 1, '20-11','y']) as good_add:
             add_expense()
             self.assertIn('good', expenses[cat])
-            self.assertEqual(expenses[cat]['Good'], 1.00)
+            self.assertEqual(expenses[cat]['Good'], {'expense_amount': 1.00, 'due_date': '20-Nov'})
 
-            self.assertEqual(good_add.call_count, 4)
+            self.assertEqual(good_add.call_count, 5)
 
     def test_add_invalid_valid_amount(self):
         self.run_on_categories(self.assert_add_invalid_valid_exp_amount)
@@ -102,11 +102,11 @@ class TestAddIntegration(TestExpense):
 
         #valid cat
         cat_list = str(list(Category).index(cat) + 1)
-        with patch("builtins.input", side_effect=[cat_list, 'good add', 3.21, 'y']) as valid_cat:
+        with patch("builtins.input", side_effect=[cat_list, 'good add', 3.21, '20-11' ,'y']) as valid_cat:
             good_cat = get_expense_detail()
             self.assertIsInstance(good_cat, tuple)
-            self.assertEqual(good_cat, (cat, 'Good Add', 3.21))
-            self.assertEqual(valid_cat.call_count, 4)
+            self.assertEqual(good_cat, (cat, 'Good Add', 3.21, '20-Nov'))
+            self.assertEqual(valid_cat.call_count, 5)
 
     def test_add_invalid_valid_cat_category(self):
         self.run_on_categories(self.assert_add_invalid_valid_exp_category)
