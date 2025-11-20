@@ -72,7 +72,8 @@ class TestAddIntegration(TestExpense):
     #Invalid -> Valid Amount
     def assert_add_invalid_valid_exp_amount(self, cat):
         #invalid amount
-        with patch("builtins.input", side_effect=[cat, 'no good', 'one dollar', '0']) as bad_add:
+        cat_list = str(list(Category).index(cat) + 1)
+        with patch("builtins.input", side_effect=[cat_list, 'no good', 'one dollar', '0']) as bad_add:
             add_expense()
             self.assertNotIn('no good', expenses[cat])
 
@@ -83,7 +84,7 @@ class TestAddIntegration(TestExpense):
 
         with patch("builtins.input", side_effect=[cat_list, 'good', 1, '20-11','y']) as good_add:
             add_expense()
-            self.assertIn('good', expenses[cat])
+            self.assertIn('Good', expenses[cat])
             self.assertEqual(expenses[cat]['Good'], {'expense_amount': 1.00, 'due_date': '20-Nov'})
 
             self.assertEqual(good_add.call_count, 5)
