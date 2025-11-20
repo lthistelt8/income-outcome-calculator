@@ -16,4 +16,3 @@ def validate_due_date(exp_month, exp_day):
         formatted_date = strftime('%m,%d')
         return formatted_date
     return None
-
