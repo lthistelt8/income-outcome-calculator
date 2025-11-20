@@ -9,8 +9,9 @@ def get_expense_detail():
         Category (represented by an integer category index, or 'cidx')
         Expense name (represented by a string)
         Expense amount (represented by a float)
+        Due date (parsed into a datetime object from string input)
     """
-
+    #SELECT CAT
     for i, cat in enumerate(Category, 1):
         print(f"{i}. {cat}")
     print("Enter the category number for this expense (or 0 to cancel at any point).")
@@ -34,6 +35,7 @@ def get_expense_detail():
 
     cat = list(Category)[cidx - 1]
 
+    #ENTER EXPENSE NAME
     print("Enter the expense name.")
     expense_name = str(input("> ")).title()
     if expense_name == "0":
@@ -56,7 +58,7 @@ def get_expense_detail():
             edit_expense()
             break
 
-
+    #ENTER EXPENSE AMOUNT
     while True:
         print("Enter expense amount.")
 
@@ -70,7 +72,26 @@ def get_expense_detail():
             continue
         break
 
-    print(f"Expense: {expense_name}, {expense_amount}, in {cat} expenses.") #expense_amount is properly referenced, need to determine how to override warning
+    #ENTER & PARSE DUE DATE
+    print(
+        "Enter expense due date in DD-MM format. For example, for November 20, enter '20-11")
+
+    while True:
+        try:
+            due_date_str = input("\n> ")
+            current_year = datetime.now().year
+
+            due_date_obj = datetime.strptime(f"{due_date_str} - {current_year}", "%d,%m,%Y")
+            due_date = due_date_obj.strftime("%d-%b")
+
+        except ValueError:
+            print("Invalid entry. Please use DD-MM format.")
+            continue
+
+        break
+
+    print(f"Expense: {expense_name}, {expense_amount}, in {cat} expenses. Due date: {due_date}")
+    #need to determine how to override warnings
     print("Confirm expense? (y/n)")
     while True:
         confirm = str(input("> "))
@@ -83,7 +104,7 @@ def get_expense_detail():
 
         print(cat, expense_name, expense_amount) #debug text
 
-        return cat, expense_name, expense_amount
+        return cat, expense_name, expense_amount, due_date
 
 def del_expense():
     """Collects input to pass through helper functions"""
