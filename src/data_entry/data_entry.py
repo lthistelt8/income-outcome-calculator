@@ -105,7 +105,8 @@ def get_expense_detail():
         if confirm == 'n':
             get_expense_detail()
 
-        print(cat, expense_name, expense_amount, due_date) #debug text
+        print("DEBUG expenses keys:", list(expenses.keys()))
+        print("DEBUG key types:", [type(k) for k in expenses.keys()])
 
         return cat, expense_name, expense_amount, due_date
 
