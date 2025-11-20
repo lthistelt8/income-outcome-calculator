@@ -1,6 +1,8 @@
 """Holds expenses dictionary, as well as Category enum class"""
 
 from enum import StrEnum
+from datetime import datetime
+from typing import Dict, TypedDict
 
 
 class Category(StrEnum):
@@ -11,5 +13,15 @@ class Category(StrEnum):
     ONE_TIME_EXPENSE = "One Time Expense"
 
 
-expenses: dict[Category, dict[str, float]] = {}
-#expenses format: a dictionary of Categories, which is another dictionary of [str, float] formatted key:pairs
+class ExpenseEntry(TypedDict):
+    expense_amount: float
+    due_date: datetime
+
+
+ExpensesDict = Dict[Category, Dict[str, ExpenseEntry]]
+#ExpenseDict: a dictionary of a given Category,
+#which is then a list containing a string value, and the values within ExpenseEntry
+#(which would be the expense amount and its due date)
+
+expenses: ExpensesDict = {}
+#the 'expenses' dictionary now follows a defined format
