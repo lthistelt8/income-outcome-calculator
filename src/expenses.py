@@ -19,6 +19,7 @@ class ExpenseEntry(TypedDict):
 
 
 ExpensesDict = Dict[Category, Dict[str, ExpenseEntry]]
+## ALL core functions must follow this format
 #ExpenseDict: a dictionary of a given Category,
 #which is then a list containing a string value, and the values within ExpenseEntry
 #(which would be the expense amount and its due date)
