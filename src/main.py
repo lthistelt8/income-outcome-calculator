@@ -60,19 +60,22 @@ def del_expense_core(category, didx):
 
 
 def update_expense():
-    category, former_expense, new_expense_name, new_expense_amount = edit_expense()
+    category, former_expense, new_expense_name, new_expense_amount, new_due_date = edit_expense()
     new_expense_amount = float(new_expense_amount)
 
-    update_expense_core(category, former_expense, new_expense_name, new_expense_amount)
+    update_expense_core(category, former_expense, new_expense_name, new_expense_amount, new_due_date)
     #values will update regardless of user input
 
     print(
         f"Updated expense: {new_expense_name} - ${new_expense_amount:.2f}"
     )
 
-def update_expense_core(category, former_expense, new_expense, new_amount):
+def update_expense_core(category: Category, former_expense: str, new_expense: str, new_amount: float, new_due_date: datetime):
     """Deletes old expense, replaces it with updated expense"""
 
     expenses[category].pop(former_expense, None)
     #deletes old expense
-    expenses[category][new_expense] = new_amount
+    expenses[category][new_expense] = {
+        'expense_amount': new_amount,
+        'due_date': new_due_date
+    }
