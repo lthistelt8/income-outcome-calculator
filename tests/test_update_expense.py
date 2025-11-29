@@ -2,31 +2,36 @@ from tests.test_paycheck import TestExpense, Category, expenses
 from unittest.mock import patch
 from src.main import update_expense, add_expense_core
 from src.data_entry.data_entry import edit_expense
+from datetime import date
 
 class TestUpdateExpense(TestExpense):
     def assert_edit_expense_name(self, cat):
-        add_expense_core(cat, 'test', 2.0, due_date)
+        date_par = date(2025, 11, 20)
+        add_expense_core(cat, 'test', 2.0, date_par)
         #will run same test with all four categories
 
+
         cat_list = str(list(Category).index(cat) + 1)
-        with patch("builtins.input", side_effect=[cat_list, 1, 'pytest', '', 'y']) as edited_expense:
+        with patch("builtins.input", side_effect=[cat_list, 1, 'pytest', '', '', 'y']) as edited_expense:
             edit_exp = edit_expense()
-            self.assertEqual(edit_exp, (cat, 'test', 'Pytest', 2.0))
+            self.assertEqual(edit_exp, (cat, 'test', 'Pytest', 2.0, date(2025, 11, 20)))
 
-            self.assertEqual(edited_expense.call_count, 5)
+            self.assertEqual(edited_expense.call_count, 6)
 
-    def test_update_expense_name_only(self):
+    def test_update_expense_name(self):
         self.run_on_categories(self.assert_edit_expense_name)
 
     def assert_edit_no_change(self, cat):
-        add_expense_core(cat, 'test', 2.0, due_date)
+        date_par = date(2025, 11, 20)
+        add_expense_core(cat, 'test', 2.0, date_par)
 
         cat_list = str(list(Category).index(cat) + 1)
-        with patch("builtins.input", side_effect=[cat_list, 1, '', '', 'y']) as edit_expense_no_change:
-            no_chg_exp = edit_expense()
-            self.assertEqual(no_chg_exp, (cat, 'test', 'test', 2.0))
 
-            self.assertEqual(edit_expense_no_change.call_count, 5)
+        with patch("builtins.input", side_effect=[cat_list, 1, '', '', '', 'y']) as edit_expense_no_change:
+            no_chg_exp = edit_expense()
+            self.assertEqual(no_chg_exp, (cat, 'test', 'test', 2.0, date(2025, 11, 20)))
+
+            self.assertEqual(edit_expense_no_change.call_count, 6)
 
     def test_update_no_change(self):
         self.run_on_categories(self.assert_edit_no_change)
