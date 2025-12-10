@@ -40,30 +40,34 @@ class TestUpdateIntegration(TestExpense):
     def assert_successful_update(self, cat):
 
         cat_list = str(list(Category).index(cat) + 1)
-        add_expense_core(cat, "un-updated expense", 2, due_date)
+        date_par = date(2025, 11, 20)
 
-        with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", 20, "y"]) as updated_expense:
+        add_expense_core(cat, "un-updated expense", 2, date_par)
+
+        with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", 20, '11-12', "y"]) as updated_expense:
             update_expense()
             self.assertIn('Updated Expense', expenses[cat])
             self.assertNotIn('Un-Updated Expense', expenses[cat])
-            self.assertEqual(expenses[cat]['Updated Expense'], 20.00)
+            self.assertEqual(expenses[cat]['Updated Expense'], (date(2025, 12, 11), 20.0))
 
-            self.assertEqual(updated_expense.call_count, 5)
+            self.assertEqual(updated_expense.call_count, 6)
 
-    def test_successful_update_once(self):
+    def test_successful_update(self):
         self.run_on_categories(self.assert_successful_update)
 
     #Invalid -> Valid Update
     def assert_update_invalid_valid_exp(self, cat):
         cat_list = str(list(Category).index(cat) + 1)
-        add_expense_core(cat, "new expense", 2, due_date)
+        date_par = date(2025, 11, 20)
 
-        with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'updated expense', 'three', 3, 'y']) as invalid_valid_update:
+        add_expense_core(cat, "new expense", 2, date_par)
+
+        with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'updated expense', 'three', 3, '', 'y']) as invalid_valid_update:
             update_expense()
             self.assertIn('Updated Expense', expenses[cat])
-            self.assertEqual(expenses[cat]['Updated Expense'], 3.00)
+            self.assertEqual(expenses[cat]['Updated Expense'], (date(2025, 11, 20), 3.0))
 
-            self.assertEqual(invalid_valid_update.call_count, 8)
+            self.assertEqual(invalid_valid_update.call_count, 9)
 
     def test_update_invalid_valid_exp(self):
         self.run_on_categories(self.assert_update_invalid_valid_exp)
