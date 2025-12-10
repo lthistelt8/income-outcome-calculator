@@ -1,6 +1,6 @@
 """Take user input to return as parameters to pass through business logic"""
 from src.expenses import expenses, Category
-from datetime import datetime
+from datetime import date
 
 
 def get_expense_detail():
@@ -209,8 +209,11 @@ def edit_expense():
             print(f"No expenses in {selected_cidx}.")
             return None
 
-        for e, (exp_name, exp_amount, current_due_date) in enumerate(exp, 1):
-            print(f"{e}. {exp_name} - ${exp_amount:.2f}, due {current_due_date}")
+        for e, (exp_name, exp_data) in enumerate(exp, 1):
+            exp_amount = exp_data["expense_amount"]
+            current_due_date = exp_data["due_date"]
+
+            print(f"{e}. {exp_name} - ${exp_amount:.2f}, due {current_due_date.strftime("%d-%b")}")
 
         print("Enter the corresponding expense number.")
         while True:
@@ -229,7 +232,7 @@ def edit_expense():
                 continue
             break
 
-        current_name, current_amount = exp[eidx - 1]
+        current_name, exp_data = exp[eidx - 1]
 
         print(f"\nNow editing {current_name}.")
 
@@ -247,7 +250,7 @@ def edit_expense():
             new_exp_amount = input("> ")
 
             if new_exp_amount == "": #check for "Enter" input before validating float type
-                new_exp_amount = float(current_amount)
+                new_exp_amount = float(exp_amount)
                 break
 
             try:
@@ -258,32 +261,31 @@ def edit_expense():
                 continue
             break
 
-        #VERIFY UPDATED EXPENSE
-        print(
-            f"{new_exp_name} - ${new_exp_amount:.2f} in {selected_cidx}? (y/n)"
-        )
-        print("Update expense?")
-
         #NEW DUE DATE
         print("Enter new due date, or Enter to keep the existing date.")
         while True:
             try:
                 new_due_date_str = input("\n> ")
                 if new_due_date_str == "":
-                    new_due_date = current_due_date
+                    new_due_date_raw = current_due_date
                     break
 
-                current_year = datetime.now().year
-
-                new_due_date_obj = datetime.strptime(f"{new_due_date_str} - {current_year}", "%d,%m,%Y")
-                new_due_date = new_due_date_obj.strftime("%d-%b")
+                day, month = map(int, new_due_date_str.split("-"))
+                current_year = date.today().year
+                new_due_date_raw = date(current_year, month, day)
 
             except ValueError:
+                print(new_due_date_str)
                 print("Invalid entry. Please enter in DD-MM format (ex.: November 20 is represented as 20-11).")
                 continue
+
             break
 
-
+        #VERIFY UPDATED EXPENSE
+        print(
+            f"{new_exp_name} - ${new_exp_amount:.2f} in {selected_cidx}, due {new_due_date_raw.strftime("%d-%b")}? (y/n)"
+        )
+        print("Update expense?")
 
         while True:
             confirm = str(input("> "))
@@ -296,7 +298,7 @@ def edit_expense():
                 print("Returning to main menu...")
                 break
 
-            print(selected_cidx, current_name, new_exp_name, new_exp_amount)
+            print(selected_cidx, current_name, new_exp_name, new_exp_amount, new_due_date_raw)
             #debug text; displays the values that are to be returned for use in 'update_expense'
 
-            return selected_cidx, current_name, new_exp_name, new_exp_amount, new_due_date
+            return selected_cidx, current_name, new_exp_name, new_exp_amount, new_due_date_raw
