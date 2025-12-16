@@ -58,7 +58,7 @@ class TestUpdateIntegration(TestExpense):
     #Invalid -> Valid Update
     def assert_update_invalid_valid_exp(self, cat):
         cat_list = str(list(Category).index(cat) + 1)
-        date_par = date(2025, 11, 20)
+        date_par = date(2025, 11, 20) #asserts for dates need to match this format
 
         add_expense_core(cat, "new expense", 2, date_par)
 
@@ -66,6 +66,7 @@ class TestUpdateIntegration(TestExpense):
             update_expense()
             self.assertIn('Updated Expense', expenses[cat])
             self.assertEqual(expenses[cat]['Updated Expense'], {'expense_amount': 3.0, 'due_date': date(2025, 11, 20)})
+            #assert against dict entries using curly brackets
 
             self.assertEqual(invalid_valid_update.call_count, 9)
 

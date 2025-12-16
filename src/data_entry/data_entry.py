@@ -271,6 +271,7 @@ def edit_expense():
                     break
 
                 day, month = map(int, new_due_date_str.split("-"))
+                #splits the two values on either side of the dash, then sets each variable to the respective value
                 current_year = date.today().year
                 new_due_date_raw = date(current_year, month, day)
 
