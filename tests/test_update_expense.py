@@ -48,7 +48,7 @@ class TestUpdateIntegration(TestExpense):
             update_expense()
             self.assertIn('Updated Expense', expenses[cat])
             self.assertNotIn('Un-Updated Expense', expenses[cat])
-            self.assertEqual(expenses[cat]['Updated Expense'], (date(2025, 12, 11), 20.0))
+            self.assertEqual(expenses[cat]['Updated Expense'], {'expense_amount': 20.0, 'due_date': date(2025, 12, 11)})
 
             self.assertEqual(updated_expense.call_count, 6)
 
@@ -65,7 +65,7 @@ class TestUpdateIntegration(TestExpense):
         with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'updated expense', 'three', 3, '', 'y']) as invalid_valid_update:
             update_expense()
             self.assertIn('Updated Expense', expenses[cat])
-            self.assertEqual(expenses[cat]['Updated Expense'], (date(2025, 11, 20), 3.0))
+            self.assertEqual(expenses[cat]['Updated Expense'], {'expense_amount': 3.0, 'due_date': date(2025, 11, 20)})
 
             self.assertEqual(invalid_valid_update.call_count, 9)
 
