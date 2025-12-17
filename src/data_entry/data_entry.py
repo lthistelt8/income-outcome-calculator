@@ -299,7 +299,4 @@ def edit_expense():
                 print("Returning to main menu...")
                 break
 
-            print(selected_cidx, current_name, new_exp_name, new_exp_amount, new_due_date_raw)
-            #debug text; displays the values that are to be returned for use in 'update_expense'
-
             return selected_cidx, current_name, new_exp_name, new_exp_amount, new_due_date_raw
