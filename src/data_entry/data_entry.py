@@ -1,6 +1,6 @@
 """Take user input to return as parameters to pass through business logic"""
 from src.expenses import expenses, Category
-from datetime import date
+from datetime import date, datetime
 
 
 def get_expense_detail():
@@ -82,7 +82,7 @@ def get_expense_detail():
             if due_date_str == '0':
                 return None
 
-            current_year = datetime.now().year
+            current_year = date.today().year
 
             due_date_obj = datetime.strptime(f"{due_date_str}-{current_year}", "%d-%m-%Y")
             due_date = due_date_obj.strftime("%d-%b")
