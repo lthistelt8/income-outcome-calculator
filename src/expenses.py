@@ -15,7 +15,7 @@ class Category(StrEnum):
 
 class ExpenseEntry(TypedDict):
     expense_amount: float
-    due_date: datetime
+    due_date: int
 
 
 ExpensesDict = Dict[Category, Dict[str, ExpenseEntry]]
