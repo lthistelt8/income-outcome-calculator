@@ -32,7 +32,7 @@ def add_expense():
     add_expense_core(category, expense_name, expense_amount, due_date)
     return None
 
-def add_expense_core(category: Category, expense_name: str, expense_amount: float, due_date: datetime):
+def add_expense_core(category: Category, expense_name: str, expense_amount: float, due_date: int):
     """Handles the actual mutation of expenses dictionary"""
     expenses[category][expense_name] = {
         'expense_amount': expense_amount,
@@ -70,7 +70,7 @@ def update_expense():
         f"Updated expense: {new_expense_name} - ${new_expense_amount:.2f}"
     )
 
-def update_expense_core(category: Category, former_expense: str, new_expense: str, new_amount: float, new_due_date: datetime):
+def update_expense_core(category: Category, former_expense: str, new_expense: str, new_amount: float, new_due_date: int):
     """Deletes old expense, replaces it with updated expense"""
 
     expenses[category].pop(former_expense, None)
