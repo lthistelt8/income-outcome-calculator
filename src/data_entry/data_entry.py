@@ -74,26 +74,24 @@ def get_expense_detail():
 
     #ENTER & PARSE DUE DATE
     print(
-        "Enter expense due date in DD-MM format. Example: for November 20, enter '20-11'.")
+        "Enter numerical date of expense (1-28).")
 
     while True:
         try:
             due_date_str = input("\n> ")
             if due_date_str == '0':
                 return None
-
-            current_year = date.today().year
-
-            due_date_obj = datetime.strptime(f"{due_date_str}-{current_year}", "%d-%m-%Y")
-            due_date = due_date_obj.strftime("%d-%b")
+            elif int(due_date_str) > 28:
+                print("Date cannot exceed the 28th. Date set to 28.")
+                due_date_str = '28'
 
         except ValueError:
-            print("Invalid entry. Please use DD-MM format.")
+            print("Invalid entry. Please enter a numerical value.")
             continue
 
         break
 
-    print(f"Expense: {expense_name}, {expense_amount}, in {cat} expenses. Due date: {due_date}")
+    print(f"Expense: {expense_name}, {expense_amount}, in {cat} expenses. Due date: {due_date_str}")
     #need to determine how to override warnings
     print("Confirm expense? (y/n)")
     while True:
@@ -108,7 +106,7 @@ def get_expense_detail():
         print("DEBUG expenses keys:", list(expenses.keys()))
         print("DEBUG key types:", [type(k) for k in expenses.keys()])
 
-        return cat, expense_name, expense_amount, due_date
+        return cat, expense_name, expense_amount, due_date_str
 
 def del_expense():
     """Collects input to pass through helper functions"""
@@ -213,7 +211,7 @@ def edit_expense():
             exp_amount = exp_data["expense_amount"]
             current_due_date = exp_data["due_date"]
 
-            print(f"{e}. {exp_name} - ${exp_amount:.2f}, due {current_due_date.strftime("%d-%b")}")
+            print(f"{e}. {exp_name} - ${exp_amount:.2f}, due {current_due_date}")
 
         print("Enter the corresponding expense number.")
         while True:
@@ -246,7 +244,7 @@ def edit_expense():
 
         #NEW EXPENSE AMOUNT
         while True:
-            print("Enter new expense amount, or Enter to keep the current value.")
+            print(f"Enter new expense amount, or Enter to keep the current value: {exp_amount}.")
             new_exp_amount = input("> ")
 
             if new_exp_amount == "": #check for "Enter" input before validating float type
@@ -262,7 +260,7 @@ def edit_expense():
             break
 
         #NEW DUE DATE
-        print("Enter new due date, or Enter to keep the existing date.")
+        print(f"Enter new due date, or Enter to keep the existing date: {current_due_date}.")
         while True:
             try:
                 new_due_date_str = input("\n> ")
@@ -270,21 +268,16 @@ def edit_expense():
                     new_due_date_raw = current_due_date
                     break
 
-                day, month = map(int, new_due_date_str.split("-"))
-                #splits the two values on either side of the dash, then sets each variable to the respective value
-                current_year = date.today().year
-                new_due_date_raw = date(current_year, month, day)
-
             except ValueError:
                 print(new_due_date_str)
-                print("Invalid entry. Please enter in DD-MM format (ex.: November 20 is represented as 20-11).")
+                print("Invalid entry. Please enter numerical values 1-28.")
                 continue
 
             break
 
         #VERIFY UPDATED EXPENSE
         print(
-            f"{new_exp_name} - ${new_exp_amount:.2f} in {selected_cidx}, due {new_due_date_raw.strftime("%d-%b")}? (y/n)"
+            f"{new_exp_name} - ${new_exp_amount:.2f} in {selected_cidx}, due {new_due_date_raw}? (y/n)"
         )
         print("Update expense?")
 
