@@ -6,15 +6,14 @@ from datetime import date
 
 class TestUpdateExpense(TestExpense):
     def assert_edit_expense_name(self, cat):
-        date_par = date(2025, 11, 20)
-        add_expense_core(cat, 'test', 2.0, date_par)
+        add_expense_core(cat, 'test', 2.0, 21)
         #will run same test with all four categories
 
 
         cat_list = str(list(Category).index(cat) + 1)
         with patch("builtins.input", side_effect=[cat_list, 1, 'pytest', '', '', 'y']) as edited_expense:
             edit_exp = edit_expense()
-            self.assertEqual(edit_exp, (cat, 'test', 'Pytest', 2.0, date(2025, 11, 20)))
+            self.assertEqual(edit_exp, (cat, 'test', 'Pytest', 2.0, 21))
 
             self.assertEqual(edited_expense.call_count, 6)
 
@@ -22,14 +21,13 @@ class TestUpdateExpense(TestExpense):
         self.run_on_categories(self.assert_edit_expense_name)
 
     def assert_edit_no_change(self, cat):
-        date_par = date(2025, 11, 20)
-        add_expense_core(cat, 'test', 2.0, date_par)
+        add_expense_core(cat, 'test', 2.0, 21)
 
         cat_list = str(list(Category).index(cat) + 1)
 
         with patch("builtins.input", side_effect=[cat_list, 1, '', '', '', 'y']) as edit_expense_no_change:
             no_chg_exp = edit_expense()
-            self.assertEqual(no_chg_exp, (cat, 'test', 'test', 2.0, date(2025, 11, 20)))
+            self.assertEqual(no_chg_exp, (cat, 'test', 'test', 2.0, 21))
 
             self.assertEqual(edit_expense_no_change.call_count, 6)
 
@@ -40,15 +38,14 @@ class TestUpdateIntegration(TestExpense):
     def assert_successful_update(self, cat):
 
         cat_list = str(list(Category).index(cat) + 1)
-        date_par = date(2025, 11, 20)
 
-        add_expense_core(cat, "un-updated expense", 2, date_par)
+        add_expense_core(cat, "un-updated expense", 2, 11)
 
-        with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", 20, '11-12', "y"]) as updated_expense:
+        with patch("builtins.input", side_effect=[cat_list, 1, "updated expense", 20, 9, "y"]) as updated_expense:
             update_expense()
             self.assertIn('Updated Expense', expenses[cat])
             self.assertNotIn('Un-Updated Expense', expenses[cat])
-            self.assertEqual(expenses[cat]['Updated Expense'], {'expense_amount': 20.0, 'due_date': date(2025, 12, 11)})
+            self.assertEqual(expenses[cat]['Updated Expense'], {'expense_amount': 20.0, 'due_date': 9})
 
             self.assertEqual(updated_expense.call_count, 6)
 
@@ -58,14 +55,13 @@ class TestUpdateIntegration(TestExpense):
     #Invalid -> Valid Update
     def assert_update_invalid_valid_exp(self, cat):
         cat_list = str(list(Category).index(cat) + 1)
-        date_par = date(2025, 11, 20) #asserts for dates need to match this format
 
-        add_expense_core(cat, "new expense", 2, date_par)
+        add_expense_core(cat, "new expense", 2, 21)
 
         with patch("builtins.input", side_effect=[5, cat_list, 2, 1, 'updated expense', 'three', 3, '', 'y']) as invalid_valid_update:
             update_expense()
             self.assertIn('Updated Expense', expenses[cat])
-            self.assertEqual(expenses[cat]['Updated Expense'], {'expense_amount': 3.0, 'due_date': date(2025, 11, 20)})
+            self.assertEqual(expenses[cat]['Updated Expense'], {'expense_amount': 3.0, 'due_date': 21})
             #assert against dict entries using curly brackets
 
             self.assertEqual(invalid_valid_update.call_count, 9)
