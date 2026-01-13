@@ -265,7 +265,7 @@ def edit_expense():
             try:
                 new_due_date_str = input("\n> ")
                 if new_due_date_str == "":
-                    new_due_date_raw = current_due_date
+                    new_due_date_str = current_due_date
                     break
 
             except ValueError:
@@ -277,7 +277,7 @@ def edit_expense():
 
         #VERIFY UPDATED EXPENSE
         print(
-            f"{new_exp_name} - ${new_exp_amount:.2f} in {selected_cidx}, due {new_due_date_raw}? (y/n)"
+            f"{new_exp_name} - ${new_exp_amount:.2f} in {selected_cidx}, due {new_due_date_str}? (y/n)"
         )
         print("Update expense?")
 
@@ -292,4 +292,4 @@ def edit_expense():
                 print("Returning to main menu...")
                 break
 
-            return selected_cidx, current_name, new_exp_name, new_exp_amount, new_due_date_raw
+            return selected_cidx, current_name, new_exp_name, new_exp_amount, new_due_date_str
